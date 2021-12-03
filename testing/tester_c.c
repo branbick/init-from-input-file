@@ -1,8 +1,3 @@
-/* 
-Build command:
-gcc tester.c ..\init_from_input_file.c ..\init_tools.c -Wall -Wextra -Wpedantic -std=c90 -o tester_c
- */
-
 #include "../init_from_input_file.h"
 
 #include <stdbool.h>

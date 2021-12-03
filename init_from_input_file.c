@@ -6,7 +6,14 @@
 #include <string.h>
 #include <ctype.h>
 
-#define INIT_BOOL_TEMP_LEN 6  /* Supports "true\0" (5 chars) and "false\0" (6 chars) */
+/*
+Define the length of the temp char array used in initBool. A length of 7
+supports "true\0" (5 chars) and "false\0" (6 chars) plus one additional char
+used to ensure that, e.g., "falsely" isn't parsed as "false"--only the whole
+words "true" and "false" are accepted. (Refer to the implementation of initBool
+for further details.)
+*/
+#define INIT_BOOL_TEMP_LEN 7
 
 /*
 BRIEF
@@ -193,8 +200,17 @@ bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
 {
     if (findKey(pFile, kKeyName) && findValue(pFile))
     {
-        char temp[INIT_BOOL_TEMP_LEN];
-        const int kNumRxArgsAssigned = fscanf(pFile, "%s", temp);
+        /* Initialize all the elements of temp to the null terminator */
+        char temp[INIT_BOOL_TEMP_LEN] = {'\0'};
+
+        /*
+        Assign temp. The width is set to INIT_BOOL_TEMP_LEN - 1 == 6 because
+        fscanf null-terminates the string. (Yes, the format specifier can be
+        made a variable that uses INIT_BOOL_TEMP_LEN for a variable width, but
+        that would require dynamic memory, math functions, etc.--overkill.)
+        */
+        const int kNumRxArgsAssigned = fscanf(pFile, "%6s", temp);
+
         int i;
 
         if (kNumRxArgsAssigned == 0)
@@ -209,7 +225,11 @@ bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
             return false;
         }
 
-        for (i = 0; i < INIT_BOOL_TEMP_LEN; i++)
+        /*
+        Don't need "tolower" the last two chars of temp as each of them should
+        just be the null terminator. If not, the value is invalid anyway.
+        */
+        for (i = 0; i < INIT_BOOL_TEMP_LEN - 2; i++)
             temp[i] = tolower(temp[i]);
 
         if (strcmp(temp, "true") == 0)
@@ -218,7 +238,7 @@ bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
             *pVar = false;
         else
         {
-            fprintf(stderr, "ERROR (%s, line %d): \"%s\" is an invalid Boolean value. (Only \"true\" and \"false\"--without quotation marks--are supported.)\n", __FILE__, __LINE__, temp);
+            fprintf(stderr, "ERROR (%s, line %d): Invalid Boolean value. Only \"true\" and \"false\"--without quotation marks--are supported.\n", __FILE__, __LINE__);
             return false;
         }
 

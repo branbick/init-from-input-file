@@ -10,6 +10,7 @@ Rules for input file:
     strings have to be contained within double quotation marks; can't use double quotes inside string, only single
 
 FUTURE
-install WSL (https://docs.microsoft.com/en-us/windows/wsl/about) so can, e.g., use Valgrind (https://valgrind.org/)--which doesn't work on Windows?
+use better error msgs in init_from_input_file that say which key failure corresponds to
+use Valgrind (https://valgrind.org/) to detect mem leaks and other issues
 make a ver of the project that reads all the key-val pairs into a hash map so only have to open file once, then search for vals using key?
 untrack TODO.txt / delete it from repo
