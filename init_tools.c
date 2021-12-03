@@ -89,7 +89,7 @@ bool findKey(FILE* const pFile, const char* const kKeyName)
                 case FILE_IO_STATUS_KEY_NOT_FOUND:
                     break;
                 case FILE_IO_STATUS_VALUE_NOT_FOUND:
-                    fprintf(stderr, "ERROR (%s, line %d): \"%s\" is not followed by a value (on the same line).\n", __FILE__, __LINE__, kKeyName);
+                    fprintf(stderr, "ERROR (%s, line %d): Did not find a value after \"%s\" (on the same line).\n", __FILE__, __LINE__, kKeyName);
                     return false;
                 case FILE_IO_STATUS_FEOF:
                     fprintf(stderr, "ERROR (%s, line %d): \"%s\" was not found in the input file.\n", __FILE__, __LINE__, kKeyName);
@@ -197,7 +197,7 @@ FileIoStatus proceedToNextLine(FILE* const pFile)
     }
 }
 
-bool findValue(FILE* const pFile)
+bool findValue(FILE* const pFile, const char* const kKeyName)
 {
     switch (skipSpacesAndTabs(pFile))
     {
@@ -206,16 +206,16 @@ bool findValue(FILE* const pFile)
         case FILE_IO_STATUS_VALUE_NOT_FOUND:
             /* Intentional fallthrough */
         case FILE_IO_STATUS_FEOF:
-            fprintf(stderr, "ERROR (%s, line %d): Did not find a value after and on the same line as the key.\n", __FILE__, __LINE__);
+            fprintf(stderr, "ERROR (%s, line %d): Did not find a value after \"%s\" (on the same line).\n", __FILE__, __LINE__, kKeyName);
             break;
         case FILE_IO_STATUS_FERROR:
             fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);
             break;
         case FILE_IO_STATUS_FTELL_FAIL:
-            fprintf(stderr, "ERROR (%s, line %d): Failed upon call to ftell.\n", __FILE__, __LINE__);
+            fprintf(stderr, "ERROR (%s, line %d): Failed upon a call to ftell.\n", __FILE__, __LINE__);
             break;
         case FILE_IO_STATUS_FSEEK_FAIL:
-            fprintf(stderr, "ERROR (%s, line %d): Failed upon call to fseek.\n", __FILE__, __LINE__);
+            fprintf(stderr, "ERROR (%s, line %d): Failed upon a call to fseek.\n", __FILE__, __LINE__);
             break;
         default:
             fprintf(stderr, "ERROR (%s, line %d): Default case reached.\n", __FILE__, __LINE__);

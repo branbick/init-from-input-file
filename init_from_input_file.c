@@ -174,13 +174,13 @@ bool initNonBoolNonStr(FILE* const pFile,
                        const char* const kFormatSpec,
                        void* const pVar)
 {
-    if (findKey(pFile, kKeyName) && findValue(pFile))
+    if (findKey(pFile, kKeyName) && findValue(pFile, kKeyName))
     {
         const int kNumRxArgsAssigned = fscanf(pFile, kFormatSpec, pVar);
 
         if (kNumRxArgsAssigned == 0)
         {
-            fprintf(stderr, "ERROR (%s, line %d): Receiving argument was not assigned.\n", __FILE__, __LINE__);
+            fprintf(stderr, "ERROR (%s, line %d): Receiving argument corresponding to \"%s\" was not assigned.\n", __FILE__, __LINE__, kKeyName);
             return false;
         }
 
@@ -198,7 +198,7 @@ bool initNonBoolNonStr(FILE* const pFile,
 
 bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
 {
-    if (findKey(pFile, kKeyName) && findValue(pFile))
+    if (findKey(pFile, kKeyName) && findValue(pFile, kKeyName))
     {
         /* Initialize all the elements of temp to the null terminator */
         char temp[INIT_BOOL_TEMP_LEN] = {'\0'};
@@ -215,7 +215,7 @@ bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
 
         if (kNumRxArgsAssigned == 0)
         {
-            fprintf(stderr, "ERROR (%s, line %d): Receiving argument was not assigned.\n", __FILE__, __LINE__);
+            fprintf(stderr, "ERROR (%s, line %d): Receiving argument corresponding to \"%s\" was not assigned.\n", __FILE__, __LINE__, kKeyName);
             return false;
         }
 
@@ -238,7 +238,7 @@ bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
             *pVar = false;
         else
         {
-            fprintf(stderr, "ERROR (%s, line %d): Invalid Boolean value. Only \"true\" and \"false\"--without quotation marks--are supported.\n", __FILE__, __LINE__);
+            fprintf(stderr, "ERROR (%s, line %d): Value corresponding to \"%s\" is invalid. (Only \"true\" and \"false\"--without quotation marks--are supported.)\n", __FILE__, __LINE__, kKeyName);
             return false;
         }
 
@@ -252,7 +252,7 @@ bool initString(FILE* const pFile,
                 const char* const kKeyName,
                 char* const pVar)
 {
-    if (findKey(pFile, kKeyName) && findValue(pFile))
+    if (findKey(pFile, kKeyName) && findValue(pFile, kKeyName))
     {
         FileIoStatus fileIoStatus;
         char temp;
@@ -279,7 +279,7 @@ bool initString(FILE* const pFile,
                 switch (fileIoStatus)
                 {
                     case FILE_IO_STATUS_FEOF:
-                        fprintf(stderr, "ERROR (%s, line %d): EOF occured before the receiving argument was completely assigned.\n", __FILE__, __LINE__);
+                        fprintf(stderr, "ERROR (%s, line %d): EOF occured before the receiving argument corresponding to \"%s\" was completely assigned.\n", __FILE__, __LINE__, kKeyName);
                         break;
                     case FILE_IO_STATUS_FERROR:
                         fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);

@@ -65,12 +65,14 @@ returned.
 PARAMETER(S)
 pFile
     The file pointer
+kKeyName
+    The name of the key found by findKey; used strictly for error handling
 
 RETURN VALUE
 true if the corresponding value was found on the line; false otherwise. That
 is, a Boolean.
 */
-bool findValue(FILE* pFile);
+bool findValue(FILE* pFile, const char* kKeyName);
 
 /*
 BRIEF
