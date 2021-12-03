@@ -128,15 +128,15 @@ int main(void)
 
     /*
     long double
-    NOTE: If using MinGW, have to prefix scanf (init_fxns > initNonBoolNonStr)
-    and printf (below) with __mingw_.
+    NOTE: If using MinGW, have to prefix scanf (init_fxns ->
+    init_from_input_file) and printf (below) with __mingw_.
     Refer to https://stackoverflow.com/a/14988103.
     */
     varLdouble = 0.0L;
     successFlag = initFromInputFile("tester.inp", "ldouble", "keyLdouble", &varLdouble);
     printf("keyLdouble: ");
     if (successFlag)
-        __mingw_printf("%.17Lf\n", varLdouble);
+        printf("%.17Lf\n", varLdouble);
     else
         printf("fail\n");
 

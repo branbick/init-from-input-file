@@ -114,7 +114,7 @@ int main()
         std::cout << "fail" << std::endl;
 
     // long double
-    // NOTE: If using MinGW, have to prefix scanf (init_fxns >
+    // NOTE: If using MinGW, have to prefix scanf (init_from_input_file ->
     // initNonBoolNonStr) with __mingw_.
     // Refer to https://stackoverflow.com/a/14988103.
     long double varLdouble = 0.0L;

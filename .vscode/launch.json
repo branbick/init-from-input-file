@@ -5,17 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "gcc: Build and debug active C file",
+            "name": "Build and debug active C file on Linux",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}\\tester_c.exe",
+            "program": "${fileDirname}/${fileBasenameNoExtension}.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -23,13 +22,35 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "gcc: Build active C file"
+            "preLaunchTask": "Build active C file on Linux",
+            "miDebuggerPath": "/usr/bin/gdb"
         },
         {
-            "name": "g++: Build and debug active C++ file",
+            "name": "Build and debug active C++ file on Linux",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}\\tester_cpp.exe",
+            "program": "${fileDirname}/${fileBasenameNoExtension}.out",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build active C++ file on Linux",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Build and debug active C file on Windows",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -44,7 +65,28 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "g++: Build active C++ file"
+            "preLaunchTask": "Build active C file on Windows"
+        },
+        {
+            "name": "Build and debug active C++ file on Windows",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build active C++ file on Windows"
         }
     ]
 }

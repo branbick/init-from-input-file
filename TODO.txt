@@ -12,3 +12,4 @@ Rules for input file:
 FUTURE
 install WSL (https://docs.microsoft.com/en-us/windows/wsl/about) so can, e.g., use Valgrind (https://valgrind.org/)--which doesn't work on Windows?
 make a ver of the project that reads all the key-val pairs into a hash map so only have to open file once, then search for vals using key?
+untrack TODO.txt / delete it from repo

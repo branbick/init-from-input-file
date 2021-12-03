@@ -3,19 +3,20 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "gcc: Build active C file",
-			"command": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gcc.exe",
+			"label": "Build active C file on Linux",
+			"command": "/usr/bin/gcc",
 			"args": [
+				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"..\\init_from_input_file.c",
-				"..\\init_tools.c",
+				"../init_from_input_file.c",  // Project-unique
+				"../init_tools.c",  // Project-unique
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
-				"-std=c90",
+				"-std=c90",  // Project-unique
 				"-o",
-				"tester_c.exe"
+				"${fileDirname}/${fileBasenameNoExtension}.out"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
@@ -27,23 +28,76 @@
 				"kind": "build",
 				"isDefault": true
 			},
+			"detail": "compiler: /usr/bin/gcc"
+		},
+		{
+			"type": "cppbuild",
+			"label": "Build active C++ file on Linux",
+			"command": "/usr/bin/g++",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"${file}",
+				"../init_from_input_file.c",  // Project-unique
+				"../init_tools.c",  // Project-unique
+				"-Wall",
+				"-Wextra",
+				"-Wpedantic",
+				"-std=c++17",  // Project-unique
+				"-o",
+				"${fileDirname}/${fileBasenameNoExtension}.out"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: /usr/bin/g++"
+		},
+		{
+			"type": "cppbuild",
+			"label": "Build active C file on Windows",
+			"command": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gcc.exe",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"${file}",
+				"..\\init_from_input_file.c",  // Project-unique
+				"..\\init_tools.c",  // Project-unique
+				"-Wall",
+				"-Wextra",
+				"-Wpedantic",
+				"-std=c90",  // Project-unique
+				"-o",
+				"${fileDirname}\\${fileBasenameNoExtension}.exe"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
 			"detail": "compiler: \"C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gcc.exe\""
 		},
 		{
 			"type": "cppbuild",
-			"label": "g++: Build active C++ file",
+			"label": "Build active C++ file on Windows",
 			"command": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe",
 			"args": [
+				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"..\\init_from_input_file.c",
-				"..\\init_tools.c",
+				"..\\init_from_input_file.c",  // Project-unique
+				"..\\init_tools.c",  // Project-unique
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
-				"-std=c++17",
+				"-std=c++17",  // Project-unique
 				"-o",
-				"tester_cpp.exe"
+				"${fileDirname}\\${fileBasenameNoExtension}.exe"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
