@@ -6,14 +6,10 @@
 #include <string.h>
 #include <ctype.h>
 
-/*
-Define the length of the temp char array used in initBool. A length of 7
-supports "true\0" (5 chars) and "false\0" (6 chars) plus one additional char
-used to ensure that, e.g., "falsely" isn't parsed as "false"--only the whole
-words "true" and "false" are accepted. (Refer to the implementation of initBool
-for further details.)
-*/
-#define INIT_BOOL_TEMP_LEN 7
+#ifdef PRINT_ERRORS
+/* TODO: Explain this #define */
+#define error(kMsg, kFileName, kKeyName) printError(kMsg, __FILE__, __LINE__, kFileName, kKeyName)
+#endif
 
 /*
 BRIEF
@@ -60,16 +56,14 @@ pVar
     The address of the Boolean, to-be-populated variable
 kFileName
     The name of the file "pointed" to by the file pointer; used strictly for
-    error handling
+    error handling and only if PRINT_ERRORS is #defined
 
 RETURN VALUE
 true if the passed-by-reference variable was populated; false otherwise. That
 is, a Boolean.
 */
 #ifndef PRINT_ERRORS
-static bool initBool(FILE* pFile,
-                     const char* kKeyName,
-                     bool* pVar);
+static bool initBool(FILE* pFile, const char* kKeyName, bool* pVar);
 #else
 static bool initBool(FILE* pFile,
                      const char* kKeyName,
@@ -116,7 +110,7 @@ bool initFromInputFile(const char* const kFileName,
 {
     bool successFlag;
     FILE* pFile;
-    char* varType;
+    char* varType;  /* TODO: Assign value (return of malloc) on same line and make const? */
 
     successFlag = true;
 
@@ -213,9 +207,7 @@ bool initNonBoolNonStr(FILE* const pFile,
 }
 
 #ifndef PRINT_ERRORS
-bool initBool(FILE* const pFile,
-              const char* const kKeyName,
-              bool* const pVar)
+bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
 #else
 bool initBool(FILE* const pFile,
               const char* const kKeyName,
@@ -223,16 +215,24 @@ bool initBool(FILE* const pFile,
               const char* const kFileName)
 #endif
 {
+/*
+Define the length of the temp. A length of seven supports "true\0" (five chars)
+and "false\0" (six chars) plus one additional char used to ensure that, e.g.,
+"falsely" isn't parsed as "false"--only the whole words "true" and "false" are
+accepted. (Refer to the implementation below for further details.)
+*/
+#define TEMP_LEN 7
+
     if (findKey(pFile, kKeyName) && findValue(pFile, kKeyName))
     {
         /* Initialize all the elements of temp to the null terminator */
-        char temp[INIT_BOOL_TEMP_LEN] = {'\0'};
+        char temp[TEMP_LEN] = {'\0'};
 
         /*
-        Assign temp. The width is set to INIT_BOOL_TEMP_LEN - 1 == 6 because
-        fscanf null-terminates the string. (Yes, the format specifier can be
-        made a variable that uses INIT_BOOL_TEMP_LEN for a variable width, but
-        that would require dynamic memory, math functions, etc.--overkill.)
+        Assign temp. The width is set to TEMP_LEN - 1 == 6 because fscanf null-
+        terminates the string. (Yes, the format specifier can be made a
+        variable that uses TEMP_LEN for a variable width, but that would
+        require dynamic memory, math functions, etc.--overkill.)
         */
         const int kNumRxArgsAssigned = fscanf(pFile, "%6s", temp);
 
@@ -260,7 +260,7 @@ bool initBool(FILE* const pFile,
         Don't need "tolower" the last two chars of temp as each of them should
         just be the null terminator. If not, the value is invalid anyway.
         */
-        for (i = 0; i < INIT_BOOL_TEMP_LEN - 2; i++)
+        for (i = 0; i < TEMP_LEN - 2; i++)
             temp[i] = tolower(temp[i]);
 
         if (strcmp(temp, "true") == 0)
@@ -270,8 +270,7 @@ bool initBool(FILE* const pFile,
         else
         {
 #ifdef PRINT_ERRORS
-            fprintf(stderr, "ERROR: Value is invalid. (Only \"true\" and \"false\"--without quotation marks--are supported.)\n"
-                            "       Source: %s | Line: %d | Input: %s | Key: %s\n", __FILE__, __LINE__, kFileName, kKeyName);
+            error("Value is invalid. (Only \"true\" and \"false\"--without quotation marks--are supported.)", kFileName, kKeyName);
 #endif
             return false;
         }
@@ -280,6 +279,8 @@ bool initBool(FILE* const pFile,
     }
 
     return false;
+
+#undef PRINT_ERRORS
 }
 
 bool initString(FILE* const pFile,

@@ -51,6 +51,19 @@ A FileIoStatus enumerator representing the file I/O status, used by findValue
 */
 static FileIoStatus skipSpacesAndTabs(FILE* pFile);
 
+#ifdef PRINT_ERRORS
+void printError(const char* const kMsg,
+                const char* const kFileMacro,
+                const int kLineMacro,
+                const char* const kFileName,
+                const char* const kKeyName)
+{
+    fprintf(stderr,
+        "ERROR: %s\n       Source: %s | Line: %d | Input: %s | Key: %s\n",
+        kMsg, kFileMacro, kLineMacro, kFileName, kKeyName);
+}
+#endif
+
 void stripAndLower(const char* const kStrIn, char* const strOut)
 {
     size_t whiteSpaceOffset;
