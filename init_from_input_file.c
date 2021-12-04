@@ -58,12 +58,24 @@ kKeyName
     The name of the key to search the file for
 pVar
     The address of the Boolean, to-be-populated variable
+kFileName
+    The name of the file "pointed" to by the file pointer; used strictly for
+    error handling
 
 RETURN VALUE
 true if the passed-by-reference variable was populated; false otherwise. That
 is, a Boolean.
 */
-static bool initBool(FILE* pFile, const char* kKeyName, bool* pVar);
+#ifndef PRINT_ERRORS
+static bool initBool(FILE* pFile,
+                     const char* kKeyName,
+                     bool* pVar);
+#else
+static bool initBool(FILE* pFile,
+                     const char* kKeyName,
+                     bool* pVar,
+                     const char* kFileName);
+#endif
 
 /*
 BRIEF
@@ -154,7 +166,11 @@ bool initFromInputFile(const char* const kFileName,
     else if (strcmp(varType, "ldouble") == 0)
         successFlag = initNonBoolNonStr(pFile, kKeyName, "%Lf", pVar);
     else if (strcmp(varType, "bool") == 0)
+#ifndef PRINT_ERRORS
         successFlag = initBool(pFile, kKeyName, (bool*)pVar);
+#else
+        successFlag = initBool(pFile, kKeyName, (bool*)pVar, kFileName);
+#endif
     else if (strcmp(varType, "string") == 0)
         successFlag = initString(pFile, kKeyName, (char*)pVar);
     else
@@ -196,7 +212,16 @@ bool initNonBoolNonStr(FILE* const pFile,
     return false;
 }
 
-bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
+#ifndef PRINT_ERRORS
+bool initBool(FILE* const pFile,
+              const char* const kKeyName,
+              bool* const pVar)
+#else
+bool initBool(FILE* const pFile,
+              const char* const kKeyName,
+              bool* const pVar,
+              const char* const kFileName)
+#endif
 {
     if (findKey(pFile, kKeyName) && findValue(pFile, kKeyName))
     {
@@ -215,13 +240,19 @@ bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
 
         if (kNumRxArgsAssigned == 0)
         {
-            fprintf(stderr, "ERROR (%s, line %d): Receiving argument corresponding to \"%s\" was not assigned.\n", __FILE__, __LINE__, kKeyName);
+#ifdef PRINT_ERRORS
+            fprintf(stderr, "ERROR: Receiving argument was not assigned.\n"
+                            "       Source: %s | Line: %d | Input: %s | Key: %s\n", __FILE__, __LINE__, kFileName, kKeyName);
+#endif
             return false;
         }
 
         if (kNumRxArgsAssigned == EOF)
         {
-            fprintf(stderr, "ERROR (%s, line %d): EOF or an error occured before the receiving argument was assigned.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+            fprintf(stderr, "ERROR: EOF or an error occured before the receiving argument was assigned.\n"
+                            "       Source: %s | Line: %d | Input: %s | Key: %s\n", __FILE__, __LINE__, kFileName, kKeyName);
+#endif
             return false;
         }
 
@@ -238,7 +269,10 @@ bool initBool(FILE* const pFile, const char* const kKeyName, bool* const pVar)
             *pVar = false;
         else
         {
-            fprintf(stderr, "ERROR (%s, line %d): Value corresponding to \"%s\" is invalid. (Only \"true\" and \"false\"--without quotation marks--are supported.)\n", __FILE__, __LINE__, kKeyName);
+#ifdef PRINT_ERRORS
+            fprintf(stderr, "ERROR: Value is invalid. (Only \"true\" and \"false\"--without quotation marks--are supported.)\n"
+                            "       Source: %s | Line: %d | Input: %s | Key: %s\n", __FILE__, __LINE__, kFileName, kKeyName);
+#endif
             return false;
         }
 
