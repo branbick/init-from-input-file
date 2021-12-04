@@ -56,7 +56,7 @@ pVar
     The address of the Boolean, to-be-populated variable
 kFileName
     The name of the file "pointed" to by the file pointer; used strictly for
-    error handling and only if PRINT_ERRORS is #defined
+    error handling and only if PRINT_ERRORS is #defined | TODO: Clean up?
 
 RETURN VALUE
 true if the passed-by-reference variable was populated; false otherwise. That
@@ -280,7 +280,7 @@ accepted. (Refer to the implementation below for further details.)
 
     return false;
 
-#undef PRINT_ERRORS
+#undef TEMP_LEN
 }
 
 bool initString(FILE* const pFile,
