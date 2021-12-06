@@ -3,6 +3,11 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifdef PRINT_ERRORS
+/* Simplify the calls to printError */
+#define error(kMsg, kFileName, kKeyName) printError(kMsg, __FILE__, __LINE__, kFileName, kKeyName)
+#endif
+
 /*
 BRIEF
 checkStartOfLine is a recursive function called by findKey that 1) checks the
@@ -111,7 +116,7 @@ bool findKey(FILE* const pFile, const char* const kKeyName)
                     fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);
                     return false;
                 default:
-                    fprintf(stderr, "ERROR (%s, line %d): Default case reached.\n", __FILE__, __LINE__);
+                    fprintf(stderr, "ERROR (%s, line %d): Default case was reached.\n", __FILE__, __LINE__);
                     return false;
             }
         }
@@ -133,7 +138,7 @@ bool findKey(FILE* const pFile, const char* const kKeyName)
                     fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);
                     break;
                 default:
-                    fprintf(stderr, "ERROR (%s, line %d): Default case reached.\n", __FILE__, __LINE__);
+                    fprintf(stderr, "ERROR (%s, line %d): Default case was reached.\n", __FILE__, __LINE__);
                     break;
             }
 
@@ -210,7 +215,13 @@ FileIoStatus proceedToNextLine(FILE* const pFile)
     }
 }
 
-bool findValue(FILE* const pFile, const char* const kKeyName)
+#ifndef PRINT_ERRORS
+bool findValue(FILE* const pFile)
+#else
+bool findValue(FILE* const pFile,
+               const char* const kFileName,
+               const char* const kKeyName)
+#endif
 {
     switch (skipSpacesAndTabs(pFile))
     {
@@ -219,19 +230,29 @@ bool findValue(FILE* const pFile, const char* const kKeyName)
         case FILE_IO_STATUS_VALUE_NOT_FOUND:
             /* Intentional fallthrough */
         case FILE_IO_STATUS_FEOF:
-            fprintf(stderr, "ERROR (%s, line %d): Did not find a value after \"%s\" (on the same line).\n", __FILE__, __LINE__, kKeyName);
+#ifdef PRINT_ERRORS
+            error("Did not find a value after and on the same line as the key.", kFileName, kKeyName);
+#endif
             break;
         case FILE_IO_STATUS_FERROR:
-            fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+            error("Unable to read from the input file.", kFileName, kKeyName);
+#endif
             break;
         case FILE_IO_STATUS_FTELL_FAIL:
-            fprintf(stderr, "ERROR (%s, line %d): Failed upon a call to ftell.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+            error("Failed upon a call to ftell.", kFileName, kKeyName);
+#endif
             break;
         case FILE_IO_STATUS_FSEEK_FAIL:
-            fprintf(stderr, "ERROR (%s, line %d): Failed upon a call to fseek.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+            error("Failed upon a call to fseek.", kFileName, kKeyName);
+#endif
             break;
         default:
-            fprintf(stderr, "ERROR (%s, line %d): Default case reached.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+            error("Default case was reached.", kFileName, kKeyName);
+#endif
             break;
     }
 

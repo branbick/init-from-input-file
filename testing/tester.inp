@@ -7,7 +7,7 @@ keyUshort  -1                  # 65535
 keyInt     2147483648          # -2147483648
 keyUint    -1                  # 4294967295
 keyLong    2147483649          # -2147483647
-keyUlong   -2                  # 4294967294
+keyUlong   -2                  # 18446744073709551614
 keyFloat   0.987654321         # inaccurate
 keyDouble  0.987654321         # accurate
 keyLdouble 0.98765432123456789 # accurate

@@ -7,7 +7,7 @@
 #include <ctype.h>
 
 #ifdef PRINT_ERRORS
-/* TODO: Explain this #define */
+/* Simplify the calls to printError, which is declared in init_tools.h */
 #define error(kMsg, kFileName, kKeyName) printError(kMsg, __FILE__, __LINE__, kFileName, kKeyName)
 #endif
 
@@ -27,15 +27,27 @@ kFormatSpec
     The format specifier (passed to fscanf)
 pVar
     The address of the non-bool, non-string, to-be-populated variable
+#ifdef PRINT_ERRORS
+kFileName
+    The name of the file "pointed" to by the file pointer
+#endif
 
 RETURN VALUE
 true if the passed-by-reference variable was populated; false otherwise. That
 is, a Boolean.
 */
+#ifndef PRINT_ERRORS
 static bool initNonBoolNonStr(FILE* pFile,
                               const char* kKeyName,
                               const char* kFormatSpec,
                               void* pVar);
+#else
+static bool initNonBoolNonStr(FILE* pFile,
+                              const char* kKeyName,
+                              const char* kFormatSpec,
+                              void* pVar,
+                              const char* kFileName);
+#endif
 
 /*
 BRIEF
@@ -54,9 +66,10 @@ kKeyName
     The name of the key to search the file for
 pVar
     The address of the Boolean, to-be-populated variable
+#ifdef PRINT_ERRORS
 kFileName
-    The name of the file "pointed" to by the file pointer; used strictly for
-    error handling and only if PRINT_ERRORS is #defined | TODO: Clean up?
+    The name of the file "pointed" to by the file pointer
+#endif
 
 RETURN VALUE
 true if the passed-by-reference variable was populated; false otherwise. That
@@ -96,12 +109,23 @@ kKeyName
     The name of the key to search the file for
 pVar
     The address of the string, to-be-populated variable
+#ifdef PRINT_ERRORS
+kFileName
+    The name of the file "pointed" to by the file pointer
+#endif
 
 RETURN VALUE
 true if the passed-by-reference variable was populated; false otherwise. That
 is, a Boolean.
 */
+#ifndef PRINT_ERRORS
 static bool initString(FILE* pFile, const char* kKeyName, char* pVar);
+#else
+static bool initString(FILE* pFile,
+                       const char* kKeyName,
+                       char* pVar,
+                       const char* kFileName);
+#endif
 
 bool initFromInputFile(const char* const kFileName,
                        const char* const kVarType,
@@ -110,14 +134,16 @@ bool initFromInputFile(const char* const kFileName,
 {
     bool successFlag;
     FILE* pFile;
-    char* varType;  /* TODO: Assign value (return of malloc) on same line and make const? */
+    char* varType;
 
     successFlag = true;
 
     pFile = fopen(kFileName, "r");
     if (pFile == NULL)
     {
-        fprintf(stderr, "ERROR (%s, line %d): Unable to open %s.\n", __FILE__, __LINE__, kFileName);
+#ifdef PRINT_ERRORS
+        error("Unable to open the input file.", kFileName, kKeyName);
+#endif
         return (successFlag = false);
     }
 
@@ -125,16 +151,19 @@ bool initFromInputFile(const char* const kFileName,
     Handle potential typos by removing the white space from kVarType and
     converting it to lowercase
     */
-    varType = (char*)malloc(strlen(kVarType) + 1);  /* "+ 1" for the null terminator */
+    varType = (char*)malloc((strlen(kVarType) + 1) * sizeof(char));  /* "+ 1" for the null terminator */
     if (varType == NULL)
     {
-        fprintf(stderr, "ERROR (%s, line %d): Unable to dynamically allocate memory.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+        error("Unable to dynamically allocate memory.", kFileName, kKeyName);
+#endif
         fclose(pFile);
         return (successFlag = false);
     }
     stripAndLower(kVarType, varType);
 
     /* Call the appropriate initialization function based on varType */
+#ifndef PRINT_ERRORS
     if (strcmp(varType, "char") == 0)
         successFlag = initNonBoolNonStr(pFile, kKeyName, "%c", pVar);
     else if (strcmp(varType, "schar") == 0)
@@ -160,18 +189,66 @@ bool initFromInputFile(const char* const kFileName,
     else if (strcmp(varType, "ldouble") == 0)
         successFlag = initNonBoolNonStr(pFile, kKeyName, "%Lf", pVar);
     else if (strcmp(varType, "bool") == 0)
-#ifndef PRINT_ERRORS
         successFlag = initBool(pFile, kKeyName, (bool*)pVar);
-#else
-        successFlag = initBool(pFile, kKeyName, (bool*)pVar, kFileName);
-#endif
     else if (strcmp(varType, "string") == 0)
         successFlag = initString(pFile, kKeyName, (char*)pVar);
     else
+        successFlag = false;
+#else
+    if (strcmp(varType, "char") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%c", pVar, kFileName);
+    else if (strcmp(varType, "schar") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%d", pVar, kFileName);
+    else if (strcmp(varType, "uchar") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%u", pVar, kFileName);
+    else if (strcmp(varType, "short") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%hd", pVar, kFileName);
+    else if (strcmp(varType, "ushort") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%hu", pVar, kFileName);
+    else if (strcmp(varType, "int") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%d", pVar, kFileName);
+    else if (strcmp(varType, "uint") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%u", pVar, kFileName);
+    else if (strcmp(varType, "long") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%ld", pVar, kFileName);
+    else if (strcmp(varType, "ulong") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%lu", pVar, kFileName);
+    else if (strcmp(varType, "float") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%f", pVar, kFileName);
+    else if (strcmp(varType, "double") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%lf", pVar, kFileName);
+    else if (strcmp(varType, "ldouble") == 0)
+        successFlag = initNonBoolNonStr(pFile, kKeyName, "%Lf", pVar, kFileName);
+    else if (strcmp(varType, "bool") == 0)
+        successFlag = initBool(pFile, kKeyName, (bool*)pVar, kFileName);
+    else if (strcmp(varType, "string") == 0)
+        successFlag = initString(pFile, kKeyName, (char*)pVar, kFileName);
+    else
     {
-        fprintf(stderr, "ERROR (%s, line %d): \"%s\" is an unsupported variable type.\n", __FILE__, __LINE__, kVarType);
+        /*
+        Call error with a message that states the specified, unsupported
+        variable type. Note that, regarding the argument passed to malloc,
+        "- 2" is for the format specifier in kFormatMsg that will be replaced
+        with kVarType, and "+ 1" is for the null terminator.
+        */
+        const char* const kFormatMsg = "\"%s\" is an unsupported variable type.";
+        char* const msg = (char*)malloc((strlen(kFormatMsg) - 2 + strlen(kVarType) + 1) * sizeof(char));
+        if (msg == NULL)
+        {
+            error("Unable to dynamically allocate memory.", kFileName, kKeyName);
+            free(varType);
+            fclose(pFile);
+            return (successFlag = false);
+        }
+        sprintf(msg, kFormatMsg, kVarType);
+
+        error(msg, kFileName, kKeyName);
+
+        free(msg);
+
         successFlag = false;
     }
+#endif  /* PRINT_ERRORS */
 
     free(varType);
     fclose(pFile);
@@ -179,24 +256,40 @@ bool initFromInputFile(const char* const kFileName,
     return successFlag;
 }
 
+#ifndef PRINT_ERRORS
 bool initNonBoolNonStr(FILE* const pFile,
                        const char* const kKeyName,
                        const char* const kFormatSpec,
                        void* const pVar)
+#else
+bool initNonBoolNonStr(FILE* const pFile,
+                       const char* const kKeyName,
+                       const char* const kFormatSpec,
+                       void* const pVar,
+                       const char* const kFileName)
+#endif
 {
-    if (findKey(pFile, kKeyName) && findValue(pFile, kKeyName))
+#ifndef PRINT_ERRORS
+    if (findKey(pFile, kKeyName) && findValue(pFile))
+#else
+    if (findKey(pFile, kKeyName) && findValue(pFile, kFileName, kKeyName))
+#endif
     {
         const int kNumRxArgsAssigned = fscanf(pFile, kFormatSpec, pVar);
 
         if (kNumRxArgsAssigned == 0)
         {
-            fprintf(stderr, "ERROR (%s, line %d): Receiving argument corresponding to \"%s\" was not assigned.\n", __FILE__, __LINE__, kKeyName);
+#ifdef PRINT_ERRORS
+            error("Receiving argument was not assigned.", kFileName, kKeyName);
+#endif
             return false;
         }
 
         if (kNumRxArgsAssigned == EOF)
         {
-            fprintf(stderr, "ERROR (%s, line %d): EOF or an error occured before the receiving argument was assigned.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+            error("EOF or an error occurred before the receiving argument was assigned.", kFileName, kKeyName);
+#endif
             return false;
         }
 
@@ -223,7 +316,11 @@ accepted. (Refer to the implementation below for further details.)
 */
 #define TEMP_LEN 7
 
-    if (findKey(pFile, kKeyName) && findValue(pFile, kKeyName))
+#ifndef PRINT_ERRORS
+    if (findKey(pFile, kKeyName) && findValue(pFile))
+#else
+    if (findKey(pFile, kKeyName) && findValue(pFile, kFileName, kKeyName))
+#endif
     {
         /* Initialize all the elements of temp to the null terminator */
         char temp[TEMP_LEN] = {'\0'};
@@ -241,8 +338,7 @@ accepted. (Refer to the implementation below for further details.)
         if (kNumRxArgsAssigned == 0)
         {
 #ifdef PRINT_ERRORS
-            fprintf(stderr, "ERROR: Receiving argument was not assigned.\n"
-                            "       Source: %s | Line: %d | Input: %s | Key: %s\n", __FILE__, __LINE__, kFileName, kKeyName);
+            error("Receiving argument was not assigned.", kFileName, kKeyName);
 #endif
             return false;
         }
@@ -250,8 +346,7 @@ accepted. (Refer to the implementation below for further details.)
         if (kNumRxArgsAssigned == EOF)
         {
 #ifdef PRINT_ERRORS
-            fprintf(stderr, "ERROR: EOF or an error occured before the receiving argument was assigned.\n"
-                            "       Source: %s | Line: %d | Input: %s | Key: %s\n", __FILE__, __LINE__, kFileName, kKeyName);
+            error("EOF or an error occurred before the receiving argument was assigned.", kFileName, kKeyName);
 #endif
             return false;
         }
@@ -283,11 +378,22 @@ accepted. (Refer to the implementation below for further details.)
 #undef TEMP_LEN
 }
 
+#ifndef PRINT_ERRORS
 bool initString(FILE* const pFile,
                 const char* const kKeyName,
                 char* const pVar)
+#else
+bool initString(FILE* const pFile,
+                const char* const kKeyName,
+                char* const pVar,
+                const char* const kFileName)
+#endif
 {
-    if (findKey(pFile, kKeyName) && findValue(pFile, kKeyName))
+#ifndef PRINT_ERRORS
+    if (findKey(pFile, kKeyName) && findValue(pFile))
+#else
+    if (findKey(pFile, kKeyName) && findValue(pFile, kFileName, kKeyName))
+#endif
     {
         FileIoStatus fileIoStatus;
         char temp;
@@ -296,7 +402,9 @@ bool initString(FILE* const pFile,
         /* Skip the opening double quotation mark */
         if ((fileIoStatus = freadChar(pFile, &temp)) == FILE_IO_STATUS_FERROR)
         {
-            fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+            error("Unable to read from the input file.", kFileName, kKeyName);
+#endif
             return false;
         }
 
@@ -314,13 +422,19 @@ bool initString(FILE* const pFile,
                 switch (fileIoStatus)
                 {
                     case FILE_IO_STATUS_FEOF:
-                        fprintf(stderr, "ERROR (%s, line %d): EOF occured before the receiving argument corresponding to \"%s\" was completely assigned.\n", __FILE__, __LINE__, kKeyName);
+#ifdef PRINT_ERRORS
+                        error("EOF occurred before the receiving argument was completely assigned.", kFileName, kKeyName);
+#endif
                         break;
                     case FILE_IO_STATUS_FERROR:
-                        fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+                        error("Unable to read from the input file.", kFileName, kKeyName);
+#endif
                         break;
                     default:
-                        fprintf(stderr, "ERROR (%s, line %d): Default case reached.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+                        error("Default case was reached.", kFileName, kKeyName);
+#endif
                         break;
                 }
 

@@ -100,14 +100,22 @@ returned.
 PARAMETER(S)
 pFile
     The file pointer
-kKeyName | TODO: Only pass if PRINT_ERRORS
-    The name of the key found by findKey; used strictly for error handling
+#ifdef PRINT_ERRORS
+kFileName
+    The name of the file "pointed" to by the file pointer
+kKeyName
+    The name of the key found by findKey
+#endif
 
 RETURN VALUE
 true if the corresponding value was found on the line; false otherwise. That
 is, a Boolean.
 */
-bool findValue(FILE* pFile, const char* kKeyName);
+#ifndef PRINT_ERRORS
+bool findValue(FILE* pFile);
+#else
+bool findValue(FILE* pFile, const char* kFileName, const char* kKeyName);
+#endif
 
 /*
 BRIEF
