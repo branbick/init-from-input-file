@@ -10,9 +10,7 @@ Rules for input file:
     value must immediately follow key on same line and there must be at least one space or horiz tab between the key and value
     dont have to use comments (all that matters is key, which can contain any chars), but recommend establishing comment character (eg. #) for readability/understandability
     strings have to be contained within double quotation marks; can't use double quotes inside string, only single
+one day, make a ver of the project that reads all the key-val pairs into a hash map so only have to open file once, then search for vals using key?
 
 FUTURE
-shorten lines to 80 chars?
-use Valgrind (https://valgrind.org/) to detect mem leaks and other issues
-make a ver of the project that reads all the key-val pairs into a hash map so only have to open file once, then search for vals using key?
 untrack TODO.txt / delete it from repo

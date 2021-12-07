@@ -5,7 +5,8 @@
 
 #ifdef PRINT_ERRORS
 /* Simplify the calls to printError */
-#define error(kMsg, kFileName, kKeyName) printError(kMsg, __FILE__, __LINE__, kFileName, kKeyName)
+#define error(msg, fileName, keyName) \
+    printError(msg, __FILE__, __LINE__, fileName, keyName)
 #endif
 
 /*
@@ -114,17 +115,24 @@ bool findKey(FILE* const pFile,
                     break;
                 case FILE_IO_STATUS_VALUE_NOT_FOUND:
 #ifdef PRINT_ERRORS
-                    error("Did not find a value after and on the same line as the key.", kFileName, kKeyName);
+                    error("Did not find a value after and on the same line as "
+                          "the key.",
+                          kFileName,
+                          kKeyName);
 #endif
                     return false;
                 case FILE_IO_STATUS_FEOF:
 #ifdef PRINT_ERRORS
-                    error("Key was not found in the input file.", kFileName, kKeyName);
+                    error("Key was not found in the input file.",
+                          kFileName,
+                          kKeyName);
 #endif
                     return false;
                 case FILE_IO_STATUS_FERROR:
 #ifdef PRINT_ERRORS
-                    error("Unable to read from the input file.", kFileName, kKeyName);
+                    error("Unable to read from the input file.",
+                          kFileName,
+                          kKeyName);
 #endif
                     return false;
                 default:
@@ -146,10 +154,14 @@ bool findKey(FILE* const pFile,
             switch (fileIoStatus)
             {
                 case FILE_IO_STATUS_FEOF:
-                    error("Key was not found in the input file.", kFileName, kKeyName);
+                    error("Key was not found in the input file.",
+                          kFileName,
+                          kKeyName);
                     break;
                 case FILE_IO_STATUS_FERROR:
-                    error("Unable to read from the input file.", kFileName, kKeyName);
+                    error("Unable to read from the input file.",
+                          kFileName,
+                          kKeyName);
                     break;
                 default:
                     error("Default case was reached.", kFileName, kKeyName);
@@ -246,7 +258,10 @@ bool findValue(FILE* const pFile,
         case FILE_IO_STATUS_VALUE_NOT_FOUND:
             /* Intentional fallthrough */
         case FILE_IO_STATUS_FEOF:
-            error("Did not find a value after and on the same line as the key.", kFileName, kKeyName);
+            error("Did not find a value after and on the same line as the "
+                  "key.",
+                  kFileName,
+                  kKeyName);
             break;
         case FILE_IO_STATUS_FERROR:
             error("Unable to read from the input file.", kFileName, kKeyName);
