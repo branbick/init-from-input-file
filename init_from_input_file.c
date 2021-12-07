@@ -241,14 +241,12 @@ bool initFromInputFile(const char* const kFileName,
             return (successFlag = false);
         }
         sprintf(msg, kFormatMsg, kVarType);
-
         error(msg, kFileName, kKeyName);
-
         free(msg);
 
         successFlag = false;
     }
-#endif  /* PRINT_ERRORS */
+#endif
 
     free(varType);
     fclose(pFile);
@@ -272,7 +270,7 @@ bool initNonBoolNonStr(FILE* const pFile,
 #ifndef PRINT_ERRORS
     if (findKey(pFile, kKeyName) && findValue(pFile))
 #else
-    if (findKey(pFile, kKeyName) && findValue(pFile, kFileName, kKeyName))
+    if (findKey(pFile, kKeyName, kFileName) && findValue(pFile, kFileName, kKeyName))
 #endif
     {
         const int kNumRxArgsAssigned = fscanf(pFile, kFormatSpec, pVar);
@@ -319,7 +317,7 @@ accepted. (Refer to the implementation below for further details.)
 #ifndef PRINT_ERRORS
     if (findKey(pFile, kKeyName) && findValue(pFile))
 #else
-    if (findKey(pFile, kKeyName) && findValue(pFile, kFileName, kKeyName))
+    if (findKey(pFile, kKeyName, kFileName) && findValue(pFile, kFileName, kKeyName))
 #endif
     {
         /* Initialize all the elements of temp to the null terminator */
@@ -392,7 +390,7 @@ bool initString(FILE* const pFile,
 #ifndef PRINT_ERRORS
     if (findKey(pFile, kKeyName) && findValue(pFile))
 #else
-    if (findKey(pFile, kKeyName) && findValue(pFile, kFileName, kKeyName))
+    if (findKey(pFile, kKeyName, kFileName) && findValue(pFile, kFileName, kKeyName))
 #endif
     {
         FileIoStatus fileIoStatus;

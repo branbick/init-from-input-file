@@ -50,7 +50,7 @@ void printError(const char* kMsg,
                 int kLineMacro,
                 const char* kFileName,
                 const char* kKeyName);
-#endif  /* PRINT_ERRORS */
+#endif
 
 /*
 BRIEF
@@ -82,11 +82,19 @@ pFile
     The file pointer
 kKeyName
     The name of the key to search the file for
+#ifdef PRINT_ERRORS
+kFileName
+    The name of the file "pointed" to by the file pointer\
+#endif
 
 RETURN VALUE
 true if the key was found in the file; false otherwise. That is, a Boolean.
 */
+#ifndef PRINT_ERRORS
 bool findKey(FILE* pFile, const char* kKeyName);
+#else
+bool findKey(FILE* pFile, const char* kKeyName, const char* kFileName);
+#endif
 
 /*
 BRIEF
@@ -135,4 +143,4 @@ function
 */
 FileIoStatus freadChar(FILE* pFile, char* pChar);
 
-#endif  /* INIT_TOOLS_H */
+#endif

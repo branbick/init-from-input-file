@@ -6,15 +6,13 @@ Rules for input file:
     key must be left aligned / at beginning of line (no preceding whitespace)
     one key-value per line
     key must be unique (else only first occurrence will be used)
-    info about macros for debugging/printing
+    info about macros for debugging/printing: fxns will return false if fail. Up to user to check boolean flag. Can turn on errors if desired.
     value must immediately follow key on same line and there must be at least one space or horiz tab between the key and value
     dont have to use comments (all that matters is key, which can contain any chars), but recommend establishing comment character (eg. #) for readability/understandability
     strings have to be contained within double quotation marks; can't use double quotes inside string, only single
 
 FUTURE
-use better error msgs in init_from_input_file that say which key failure corresponds to
-also pass around file name for error handling?
-use "INCLUDE_ERROR_MSGS" or "DEBUG" macro to include printfs or not? if fails, will return false. up to user to check flag.
+shorten lines to 80 chars?
 use Valgrind (https://valgrind.org/) to detect mem leaks and other issues
 make a ver of the project that reads all the key-val pairs into a hash map so only have to open file once, then search for vals using key?
 untrack TODO.txt / delete it from repo
