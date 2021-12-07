@@ -84,7 +84,7 @@ kKeyName
     The name of the key to search the file for
 #ifdef PRINT_ERRORS
 kFileName
-    The name of the file "pointed" to by the file pointer\
+    The name of the file "pointed" to by the file pointer
 #endif
 
 RETURN VALUE
