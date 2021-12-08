@@ -1,15 +1,9 @@
 README
-note that code is currently compatible with c90. goal was to make compatible with all c versions and C++.
 it's up to dev to make sure values in .inp are within range of var type and enough space is allocated for string var (so no seg fault)
 add notes about special restrictions of initBool (true or false only) and initString (must allocate sufficient space)
 Rules for input file:
-    key must be left aligned / at beginning of line (no preceding whitespace)
-    one key-value per line
-    key must be unique (else only first occurrence will be used)
     info about macros for debugging/printing: fxns will return false if fail. Up to user to check boolean flag. Can turn on errors if desired.
-    value must immediately follow key on same line and there must be at least one space or horiz tab between the key and value
     dont have to use comments (all that matters is key, which can contain any chars), but recommend establishing comment character (eg. #) for readability/understandability
-    strings have to be contained within double quotation marks; can't use double quotes inside string, only single
 one day, make a ver of the project that reads all the key-val pairs into a hash map so only have to open file once, then search for vals using key?
 
 FUTURE
