@@ -28,7 +28,7 @@ altInit 10000.0  # Initial altitude in meters (m)
    - `She said, 'Hey, Bob!'` is an acceptable value, whereas `She said, "Hey, Bob!"` is not
 
 ## Supported variable types
-The following  table lists the supported `kVarType` arguments that can be passed to `initFromInputFile` and variable type corresponding to each:
+The following  table lists the supported `kVarType` arguments that can be passed to `initFromInputFile` and the variable type corresponding to each:
 
 | Argument | Type |
 | ------ | ---- |
