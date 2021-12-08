@@ -1,9 +1,6 @@
 README
 it's up to dev to make sure values in .inp are within range of var type and enough space is allocated for string var (so no seg fault)
-add notes about special restrictions of initBool (true or false only) and initString (must allocate sufficient space)
-Rules for input file:
-    info about macros for debugging/printing: fxns will return false if fail. Up to user to check boolean flag. Can turn on errors if desired.
-    dont have to use comments (all that matters is key, which can contain any chars), but recommend establishing comment character (eg. #) for readability/understandability
+info about macros for debugging/printing: fxns will return false if fail. Up to user to check boolean flag. Can turn on errors if desired.
 one day, make a ver of the project that reads all the key-val pairs into a hash map so only have to open file once, then search for vals using key?
 
 FUTURE

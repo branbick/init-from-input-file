@@ -17,21 +17,30 @@ altInit 10000.0  # Initial altitude in meters (m)
 ```
 
 ## Rules for the input text file
-1. The extension of the input text file is insignificant
-2. Only one key-value pair is permitted per line
-3. Each key must *exactly* match the `kKeyName` argument passed to `initFromInputFile`
-4. Each key must be left-aligned, i.e., must not be preceded by white space (unless the `kKeyName` argument passed to `initFromInputFile` contains the same white space, but don't do that)
-5. Each key must be unique; otherwise, only the first instance--with respect to reading from top to bottom, left to right--will be found by the parser
-6. There must be at least one space or (horizontal) tab between each key and its corresponding value
-7. String values must be contained within double quotes and cannot themselves contain double quotes--only single quotes; e.g., ...
-   - For the value `Hey, Bob!`, the file must list `"Hey, Bob!"` after (and on the same line as) the corresponding key
-   - `She said, 'Hey, Bob!'` is an acceptable value, whereas `She said, "Hey, Bob!"` is not
+1. The extension of the input text file is insignificant.
+2. Only one key-value pair is permitted per line.
+3. Each key must *exactly* match the `kKeyName` argument passed to `initFromInputFile`.
+4. Each key must be left-aligned, i.e., must not be preceded by white space (unless the `kKeyName` argument passed to `initFromInputFile` contains the same white space, but don't do that).
+5. Each key must be unique. Otherwise, only the first instance--with respect to reading from top to bottom, left to right--will be found by the parser.
+6. There must be at least one space or (horizontal) tab between each key and its corresponding value.
+7. Boolean values must be either `true` or `false`. (`1` and `0`, respectively, are not supported.)
+8. String values must be contained within double quotes and must not contain a double quotation mark. For example, ...
+   - For the string value `Hey, Bob!`, the file must list `"Hey, Bob!"` after (and on the same line as) the corresponding key
+   - `She said, 'Hey, Bob!'` (single quotes) is an acceptable string value, whereas `She said, "Hey, Bob!"` is not (double quotes)
+9. No specific character denotes the start of a comment, as the parser simply searches for the specified key and then its corresponding value (starting from the character after the last one of the found key). Consequently, a comment can be anything--as long as, starting from the beginning of the line on which the comment begins, (part of) it doesn't match any of the `kKeyName` arguments passed to `initFromInputFile`. For example, ...
+```
+This is a comment unless one of the specified keys matches (part of) the text of this line, starting from the beginning; e.g., if one of the keys is "This is a comment"
+
+# This is almost certainly a comment (because no key should start with "#"; you can do it, but don't)
+
+/* This is also almost certainly a comment (because no key should start with "/*"; again, you can do it, but don't) */
+```
 
 ## Supported variable types
 The following  table lists the supported `kVarType` arguments that can be passed to `initFromInputFile` and the variable type corresponding to each:
 
 | Argument | Type |
-| ------ | ---- |
+| -------- | ---- |
 | `"char"` | `char` |
 | `"schar"` | `signed char` |
 | `"uchar"` | `unsigned char` |
@@ -59,3 +68,6 @@ The following  table lists the supported `kVarType` arguments that can be passed
 ## Additional notes
 ### Compatibility
 One of the primary objectives of this project was ensuring 1) compatibility with C *and* C++ and 2) backward compatibility. Hence, this tool is written in [ANSI C](https://en.wikipedia.org/wiki/ANSI_C) and compatible with [C++17](https://en.wikipedia.org/wiki/C%2B%2B17).
+
+### User responsibilities
+Due to the nature of C, as well as various deliberate design decisions made for the sakes of both efficiency and simplicity, this tool grants the user power, which must be accompanied by responsibility. That being said, the following is a list of critical user responsibilities:
