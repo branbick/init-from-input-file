@@ -1,5 +1,4 @@
 README
-it's up to dev to make sure values in .inp are within range of var type and enough space is allocated for string var (so no seg fault)
 info about macros for debugging/printing: fxns will return false if fail. Up to user to check boolean flag. Can turn on errors if desired.
 one day, make a ver of the project that reads all the key-val pairs into a hash map so only have to open file once, then search for vals using key?
 
