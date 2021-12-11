@@ -9,7 +9,7 @@ where the right-hand side (i.e., floating constant / floating-point literal) mus
 double altitudeInitial;  /* meters (m) */
 const bool kSuccessFlag = initFromInputFile("missile.inp", "double", "altInit", &altitudeInitial);
 ```
-where `init_from_input_file.h` (and, for C code, `stdbool.h`) must be `#include`d. Breaking down the above, the input text file `missile.inp` is searched for the key `altInit`, and the value corresponding to that key is assigned to `altitudeInitial` (passed by reference), which is a `double`; and, assuming success, `true` is returned by `initFromInputFile` and assigned to `kSuccessFlag`. A snippet of `missile.inp` could look like the following:
+where `init_from_input_file.h` (and, for C code, `stdbool.h`) must be `#include`d. Breaking down the above, the input text file `missile.inp` is searched for the key `altInit`, and the value corresponding to that key is assigned to `altitudeInitial` (passed by reference), which is a `double`; and, assuming success, `true` is returned by `initFromInputFile` and assigned to `kSuccessFlag`. A relevant snippet of `missile.inp` could be ...
 ```
 latInit 33.2385  # Initial latitude in degrees (deg)
 lonInit -106.3464  # Initial longitude in degrees (deg)
@@ -29,11 +29,11 @@ altInit 10000.0  # Initial altitude in meters (m)
    - `She said, 'Hey, Bob!'` (single quotes) is an acceptable string value, whereas `She said, "Hey, Bob!"` is not (double quotes)
 9. No specific character denotes the start of a comment, as the parser simply searches for the specified key and then its corresponding value (starting from the character after the last one of the found key). Consequently, a comment can be anything--as long as, starting from the beginning of the line on which the comment begins, (part of) it doesn't match any of the `kKeyName` arguments passed to `initFromInputFile`. For example, ...
 ```
-This is a comment unless one of the specified keys matches (part of) the text of this line, starting from the beginning; e.g., if one of the keys is "This is a comment"
+This is a comment unless one of the specified keys matches (part of) the text of this line, starting from the beginning--e.g., if "This is a comment" is a specified key. HOWEVER, it's best practice to start all comments with a consistent, non-letter (and non-number) identifier.
 
-# This is almost certainly a comment (because no key should start with "#"; you can do it, but don't)
+# This is almost certainly a comment (because no key should start with "#"; you CAN start a key with "#", but don't)
 
-/* This is also almost certainly a comment (because no key should start with "/*"; again, you can do it, but don't) */
+/* This is also almost certainly a comment (because no key should start with "/*"; again, you CAN start a key with "/*", but don't) */
 ```
 
 ## Supported variable types
@@ -72,4 +72,6 @@ One of the primary objectives of this project was ensuring 1) compatibility with
 ### User responsibilities
 Due to the nature of C, as well as various deliberate design decisions made for the sakes of both efficiency and simplicity, this tool grants the user power, which must be accompanied by responsibility. That being said, some noteworthy user responsibilities are as follows:
 - Ensure the type of the to-be-initialized variable is capable of accurately storing the corresponding value listed in the input text file. For example, the value corresponding to an `int` must be between `INT_MIN` and `INT_MAX`, which are machine-dependent and `#define`d in `limits.h`. (Otherwise, integer overflow--which may lead to undefined behavior--or loss of precision will occur.)
-- Regarding strings, ensure sufficient memory is allocated for the to-be-initialized variable based on the length of the corresponding value listed in the input text file. For example, the variable corresponding to the value `Hey, Bob!` must be able to hold (at least) ten `char`s--including the null terminator--and, therefore, be defined (in C code specifically) as either `char str[10]` or `char* str = malloc(10 * sizeof(char))`. [Otherwise, you'll be "touching" memory you shouldn't and (hopefully!) be presented with an error.]
+- Regarding strings, ensure sufficient memory is allocated for the to-be-initialized variable based on the length of the corresponding value listed in the input text file. For example, the variable corresponding to the value `Hey, Bob!` must be able to hold (at least) ten `char`s--including the null terminator--and, therefore, be defined (in C code specifically) as either `char str[10]` or `char* str = malloc(10 * sizeof(char))`. [Otherwise, you'll end up "touching" memory you shouldn't and (hopefully!) be presented with an error.]
+- As previously mentioned, ensure string values listed in the input text file both start and end with a double quotation mark. [If the opening one isn't included, the first `char` of the value will be skipped; and, if the closing one isn't included, you'll likely end up "touching" memory you shouldn't and definitely encounter an `initFromInputFile` failure.]
+- TODO: Check return value of `initFromInputFile`
