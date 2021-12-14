@@ -57,8 +57,8 @@ The following  table lists the supported `kVarType` arguments that can be passed
 | `"string"` | `char*` |
 
 ## How to use this tool
-1. Download the source code from [GitHub](https://github.com/branbick/init-from-input-file) into the appropriate folder on your machine
-2. `#include` the header file `init_from_input_file.h` in the C and/or C++ source code you desire to use the aforementioned functionality in
+1. Download the source code from [GitHub](https://github.com/branbick/init-from-input-file) into the appropriate folder on your machine.
+2. `#include` the header file `init_from_input_file.h` in the C and/or C++ source code you desire to use the aforementioned functionality in.
 3. Call `initFromInputFile`--which is declared in the latter header file--with the following arguments, in order:
    1. `const char* kFileName`: The relative or absolute path of the input text file
    2. `const char* kVarType`: The type of the to-be-initialized variable (discussed in the previous section)
@@ -74,4 +74,7 @@ Due to the nature of C, as well as various deliberate design decisions made for 
 - Ensure the type of the to-be-initialized variable is capable of accurately storing the corresponding value listed in the input text file. For example, the value corresponding to an `int` must be between `INT_MIN` and `INT_MAX`, which are machine-dependent and `#define`d in `limits.h`. (Otherwise, integer overflow--which may lead to undefined behavior--or loss of precision will occur.)
 - Regarding strings, ensure sufficient memory is allocated for the to-be-initialized variable based on the length of the corresponding value listed in the input text file. For example, the variable corresponding to the value `Hey, Bob!` must be able to hold (at least) ten `char`s--including the null terminator--and, therefore, be defined (in C code specifically) as either `char str[10]` or `char* str = malloc(10 * sizeof(char))`. [Otherwise, you'll end up "touching" memory you shouldn't and (hopefully!) be presented with an error.]
 - As previously mentioned, ensure string values listed in the input text file both start and end with a double quotation mark. [If the opening one isn't included, the first `char` of the value will be skipped; and, if the closing one isn't included, you'll likely end up "touching" memory you shouldn't and definitely encounter an `initFromInputFile` failure.]
-- TODO: Check return value of `initFromInputFile`
+- Check `initFromInputFile`'s return value; don't just assume it worked. There are many things that can cause it to fail--both machine and user errors (e.g., memory shortage and inconspicuous typo, respectively).
+
+## Error tracing
+TODO: To help track down errors / provide debugging information--e.g., figure out what went wrong if `initFromInputFile` returns `false`--the macro `PRINT_ERRORS` can be `#define`d, which will cause detailed error messages--containing the name of the source file in which the error occurred, the line number the error occurred on, the specified input file name, and the specified key name--to be printed whenever an error is encountered.
