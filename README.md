@@ -74,7 +74,13 @@ Due to the nature of C, as well as various deliberate design decisions made for 
 - Ensure the type of the to-be-initialized variable is capable of accurately storing the corresponding value listed in the input text file. For example, the value corresponding to an `int` must be between `INT_MIN` and `INT_MAX`, which are machine-dependent and `#define`d in `limits.h`. (Otherwise, integer overflow--which may lead to undefined behavior--or loss of precision will occur.)
 - Regarding strings, ensure sufficient memory is allocated for the to-be-initialized variable based on the length of the corresponding value listed in the input text file. For example, the variable corresponding to the value `Hey, Bob!` must be able to hold (at least) ten `char`s--including the null terminator--and, therefore, be defined (in C code specifically) as either `char str[10]` or `char* str = malloc(10 * sizeof(char))`. [Otherwise, you'll end up "touching" memory you shouldn't and (hopefully!) be presented with an error.]
 - As previously mentioned, ensure string values listed in the input text file both start and end with a double quotation mark. [If the opening one isn't included, the first `char` of the value will be skipped; and, if the closing one isn't included, you'll likely end up "touching" memory you shouldn't and definitely encounter an `initFromInputFile` failure.]
-- Check `initFromInputFile`'s return value; don't just assume it worked. There are many things that can cause it to fail--both machine and user errors (e.g., memory shortage and inconspicuous typo, respectively).
+- Check `initFromInputFile`'s return value; don't just assume it worked. There are many things--both machine and user faults (e.g., a memory shortage and an inconspicuous typo, respectively)--that can cause it to fail.
 
-## Error tracing
-TODO: To help track down errors / provide debugging information--e.g., figure out what went wrong if `initFromInputFile` returns `false`--the macro `PRINT_ERRORS` can be `#define`d, which will cause detailed error messages--containing the name of the source file in which the error occurred, the line number the error occurred on, the specified input file name, and the specified key name--to be printed whenever an error is encountered.
+### Error insight
+If the macro `PRINT_ERRORS` is `#define`d, then a message containing the following information is written to the output stream `stderr`--which is normally directed to the screen by default--whenever an error is encountered:
+1. Name of the source file in which the error occurred
+2. Line number on which it occurred
+3. `kFileName` argument passed to `initFromInputFile`
+4. `kKeyName` argument passed to `initFromInputFile`
+
+Detailed error messages greatly help with debugging. If you opt to not always `#define PRINT_ERRORS`, you should *definitely* do so whenever `initFromInputFile` returns `false`.
