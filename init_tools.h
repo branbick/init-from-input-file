@@ -17,6 +17,41 @@ typedef enum FileIoStatus
     FILE_IO_STATUS_FSEEK_FAIL
 } FileIoStatus;
 
+#ifdef PRINT_ERRORS
+/*
+BRIEF
+printError calls fprintf to print a detailed error message to stderr, in the
+following format:
+
+    ERROR: kMsg\n
+           Source: kFileMacro | Line: kLineMacro | Input: kFileName | Key: kKeyName\n
+
+PARAMETER(S)
+kMsg
+    The message to print. Must not include any format specifiers!
+kFileMacro
+    The name of the source file that called this function, obtained by using
+    the __FILE__ macro
+kLineMacro
+    The line (number) on which this function was called, obtained by using the
+    __LINE__ macro
+kFileName
+    The name of the input text file; maps back to the parameter of
+    initFromInputFile, declared in init_from_input_file.h, with the same name
+kKeyName
+    The name of the (to-be-)searched-for key; maps back to the parameter of
+    initFromInputFile, declared in init_from_input_file.h, with the same name
+
+RETURN VALUE
+N/A
+*/
+void printError(const char* kMsg,
+                const char* kFileMacro,
+                int kLineMacro,
+                const char* kFileName,
+                const char* kKeyName);
+#endif
+
 /*
 BRIEF
 stripAndLower removes the white space from a string and converts it to
@@ -47,11 +82,19 @@ pFile
     The file pointer
 kKeyName
     The name of the key to search the file for
+#ifdef PRINT_ERRORS
+kFileName
+    The name of the file "pointed" to by the file pointer
+#endif
 
 RETURN VALUE
 true if the key was found in the file; false otherwise. That is, a Boolean.
 */
+#ifndef PRINT_ERRORS
 bool findKey(FILE* pFile, const char* kKeyName);
+#else
+bool findKey(FILE* pFile, const char* kKeyName, const char* kFileName);
+#endif
 
 /*
 BRIEF
@@ -65,12 +108,22 @@ returned.
 PARAMETER(S)
 pFile
     The file pointer
+#ifdef PRINT_ERRORS
+kFileName
+    The name of the file "pointed" to by the file pointer
+kKeyName
+    The name of the key found by findKey
+#endif
 
 RETURN VALUE
 true if the corresponding value was found on the line; false otherwise. That
 is, a Boolean.
 */
+#ifndef PRINT_ERRORS
 bool findValue(FILE* pFile);
+#else
+bool findValue(FILE* pFile, const char* kFileName, const char* kKeyName);
+#endif
 
 /*
 BRIEF
@@ -90,4 +143,4 @@ function
 */
 FileIoStatus freadChar(FILE* pFile, char* pChar);
 
-#endif  /* INIT_TOOLS_H */
+#endif

@@ -3,6 +3,12 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifdef PRINT_ERRORS
+/* Simplify the calls to printError */
+#define error(msg, fileName, keyName) \
+    printError(msg, __FILE__, __LINE__, fileName, keyName)
+#endif
+
 /*
 BRIEF
 checkStartOfLine is a recursive function called by findKey that 1) checks the
@@ -51,6 +57,19 @@ A FileIoStatus enumerator representing the file I/O status, used by findValue
 */
 static FileIoStatus skipSpacesAndTabs(FILE* pFile);
 
+#ifdef PRINT_ERRORS
+void printError(const char* const kMsg,
+                const char* const kFileMacro,
+                const int kLineMacro,
+                const char* const kFileName,
+                const char* const kKeyName)
+{
+    fprintf(stderr,
+            "ERROR: %s\n       Source: %s | Line: %d | Input: %s | Key: %s\n",
+            kMsg, kFileMacro, kLineMacro, kFileName, kKeyName);
+}
+#endif
+
 void stripAndLower(const char* const kStrIn, char* const strOut)
 {
     size_t whiteSpaceOffset;
@@ -72,7 +91,13 @@ void stripAndLower(const char* const kStrIn, char* const strOut)
     *(strOut + kStrLen - whiteSpaceOffset) = '\0';
 }
 
+#ifndef PRINT_ERRORS
 bool findKey(FILE* const pFile, const char* const kKeyName)
+#else
+bool findKey(FILE* const pFile,
+             const char* const kKeyName,
+             const char* const kFileName)
+#endif
 {
     while (true)
     {
@@ -89,16 +114,31 @@ bool findKey(FILE* const pFile, const char* const kKeyName)
                 case FILE_IO_STATUS_KEY_NOT_FOUND:
                     break;
                 case FILE_IO_STATUS_VALUE_NOT_FOUND:
-                    fprintf(stderr, "ERROR (%s, line %d): \"%s\" is not followed by a value (on the same line).\n", __FILE__, __LINE__, kKeyName);
+#ifdef PRINT_ERRORS
+                    error("Did not find a value after and on the same line as "
+                          "the key.",
+                          kFileName,
+                          kKeyName);
+#endif
                     return false;
                 case FILE_IO_STATUS_FEOF:
-                    fprintf(stderr, "ERROR (%s, line %d): \"%s\" was not found in the input file.\n", __FILE__, __LINE__, kKeyName);
+#ifdef PRINT_ERRORS
+                    error("Key was not found in the input file.",
+                          kFileName,
+                          kKeyName);
+#endif
                     return false;
                 case FILE_IO_STATUS_FERROR:
-                    fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+                    error("Unable to read from the input file.",
+                          kFileName,
+                          kKeyName);
+#endif
                     return false;
                 default:
-                    fprintf(stderr, "ERROR (%s, line %d): Default case reached.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+                    error("Default case was reached.", kFileName, kKeyName);
+#endif
                     return false;
             }
         }
@@ -110,19 +150,24 @@ bool findKey(FILE* const pFile, const char* const kKeyName)
         if ((fileIoStatus = proceedToNextLine(pFile)))
         {
             /* Entered if fileIoStatus != FILE_IO_STATUS_ALL_GOOD */
-
+#ifdef PRINT_ERRORS
             switch (fileIoStatus)
             {
                 case FILE_IO_STATUS_FEOF:
-                    fprintf(stderr, "ERROR (%s, line %d): \"%s\" was not found in the input file.\n", __FILE__, __LINE__, kKeyName);
+                    error("Key was not found in the input file.",
+                          kFileName,
+                          kKeyName);
                     break;
                 case FILE_IO_STATUS_FERROR:
-                    fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);
+                    error("Unable to read from the input file.",
+                          kFileName,
+                          kKeyName);
                     break;
                 default:
-                    fprintf(stderr, "ERROR (%s, line %d): Default case reached.\n", __FILE__, __LINE__);
+                    error("Default case was reached.", kFileName, kKeyName);
                     break;
             }
+#endif
 
             return false;
         }
@@ -197,28 +242,41 @@ FileIoStatus proceedToNextLine(FILE* const pFile)
     }
 }
 
+#ifndef PRINT_ERRORS
 bool findValue(FILE* const pFile)
+#else
+bool findValue(FILE* const pFile,
+               const char* const kFileName,
+               const char* const kKeyName)
+#endif
 {
     switch (skipSpacesAndTabs(pFile))
     {
         case FILE_IO_STATUS_VALUE_FOUND:
             return true;
+#ifdef PRINT_ERRORS
         case FILE_IO_STATUS_VALUE_NOT_FOUND:
             /* Intentional fallthrough */
         case FILE_IO_STATUS_FEOF:
-            fprintf(stderr, "ERROR (%s, line %d): Did not find a value after and on the same line as the key.\n", __FILE__, __LINE__);
+            error("Did not find a value after and on the same line as the "
+                  "key.",
+                  kFileName,
+                  kKeyName);
             break;
         case FILE_IO_STATUS_FERROR:
-            fprintf(stderr, "ERROR (%s, line %d): Unable to read from the input file.\n", __FILE__, __LINE__);
+            error("Unable to read from the input file.", kFileName, kKeyName);
             break;
         case FILE_IO_STATUS_FTELL_FAIL:
-            fprintf(stderr, "ERROR (%s, line %d): Failed upon call to ftell.\n", __FILE__, __LINE__);
+            error("Failed upon a call to ftell.", kFileName, kKeyName);
             break;
         case FILE_IO_STATUS_FSEEK_FAIL:
-            fprintf(stderr, "ERROR (%s, line %d): Failed upon call to fseek.\n", __FILE__, __LINE__);
+            error("Failed upon a call to fseek.", kFileName, kKeyName);
             break;
+#endif
         default:
-            fprintf(stderr, "ERROR (%s, line %d): Default case reached.\n", __FILE__, __LINE__);
+#ifdef PRINT_ERRORS
+            error("Default case was reached.", kFileName, kKeyName);
+#endif
             break;
     }
 

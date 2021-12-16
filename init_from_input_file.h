@@ -5,8 +5,7 @@ References:
 - https://en.cppreference.com/w/cpp/language/language_linkage
 */
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #ifndef INIT_FROM_INPUT_FILE_H
@@ -56,7 +55,7 @@ bool initFromInputFile(const char* kFileName,
                        const char* kKeyName,
                        void* pVar);
 
-#endif  /* INIT_FROM_INPUT_FILE_H */
+#endif
 
 #ifdef __cplusplus
 }

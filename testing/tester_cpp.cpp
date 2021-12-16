@@ -1,6 +1,3 @@
-// Build command:
-// g++ tester.cpp ..\init_from_input_file.c ..\init_tools.c -Wall -Wextra -Wpedantic -std=c++17 -o tester_cpp
-
 #include "../init_from_input_file.h"
 
 #include <iostream>
