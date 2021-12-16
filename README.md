@@ -83,4 +83,4 @@ If the macro `PRINT_ERRORS` is `#define`d, then a message containing the followi
 3. `kFileName` argument passed to `initFromInputFile`
 4. `kKeyName` argument passed to `initFromInputFile`
 
-Detailed error messages greatly help with debugging. If you opt to not always `#define PRINT_ERRORS`, you should *definitely* do so whenever `initFromInputFile` returns `false`.
+Detailed error messages greatly help with debugging. If you decide to not always `#define PRINT_ERRORS`, you should *definitely* do so whenever `initFromInputFile` returns `false`.
