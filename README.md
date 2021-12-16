@@ -26,7 +26,7 @@ altInit 10000.0  # Initial altitude in meters (m)
 7. Boolean values must be either `true` or `false`. (`1` and `0`, respectively, are not supported.)
 8. String values must be contained within double quotes and must not contain a double quotation mark. For example, ...
    - For the string value `Hey, Bob!`, the file must list `"Hey, Bob!"` after (and on the same line as) the corresponding key
-   - `She said, 'Hey, Bob!'` (single quotes) is an acceptable string value, whereas `She said, "Hey, Bob!"` is not (double quotes)
+   - `She said, 'Hey, Bob!'` (single quotes) is an acceptable string value, whereas `She said, "Hey, Bob!"` (double quotes) is not
 9. No specific character denotes the start of a comment, as the parser simply searches for the specified key and then its corresponding value (starting from the character after the last one of the found key). Consequently, a comment can be anything--as long as, starting from the beginning of the line on which the comment begins, (part of) it doesn't match any of the `kKeyName` arguments passed to `initFromInputFile`. For example, ...
 ```
 This is a comment unless one of the specified keys matches (part of) the text of this line, starting from the beginning--e.g., if "This is a comment" is a specified key. HOWEVER, it's best practice to start all comments with a consistent, non-letter (and non-number) identifier.
