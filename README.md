@@ -27,7 +27,7 @@ altInit 10000.0  # Initial altitude in meters (m)
 8. String values must be contained within double quotes and must not contain a double quotation mark. For example, ...
    - For the string value `Hey, Bob!`, the file must list `"Hey, Bob!"` after (and on the same line as) the corresponding key
    - `She said, 'Hey, Bob!'` (single quotes) is an acceptable string value, whereas `She said, "Hey, Bob!"` (double quotes) is not
-9. No specific character denotes the start of a comment, as the parser simply searches for the specified key and then its corresponding value (starting from the character after the last one of the found key). Consequently, a comment can be anything--as long as, starting from the beginning of the line on which the comment begins, (part of) it doesn't match any of the `kKeyName` arguments passed to `initFromInputFile`. For example, ...
+9. No specific character (sequence) denotes the start of a comment, as the parser simply searches for the specified key and then its corresponding value (starting from the character after the last one of the found key). Consequently, a comment can be anything--as long as, starting from the beginning of the line on which the comment begins, (part of) it doesn't match any of the `kKeyName` arguments passed to `initFromInputFile`. For example, ...
 ```
 This is a comment unless one of the specified keys matches (part of) the text of this line, starting from the beginning--e.g., if "This is a comment" is a specified key. HOWEVER, it's best practice to start all comments with a consistent, non-letter (and non-number) identifier.
 
@@ -83,4 +83,4 @@ If the macro `PRINT_ERRORS` is `#define`d, then a message containing the followi
 3. `kFileName` argument passed to `initFromInputFile`
 4. `kKeyName` argument passed to `initFromInputFile`
 
-Detailed error messages greatly help with debugging. If you decide to not always `#define PRINT_ERRORS`, you should *definitely* do so whenever `initFromInputFile` returns `false`.
+Detailed error messages greatly help with debugging. If you decide to not always `#define PRINT_ERRORS`, you should *absolutely* do so if `initFromInputFile` has returned `false`.
