@@ -329,8 +329,8 @@ bool initBool(FILE* const pFile,
 #endif
 {
 /*
-Define the length of the temp. A length of seven supports "true\0" (five chars)
-and "false\0" (six chars) plus one additional char used to ensure that, e.g.,
+Define the length of temp. A length of seven supports "true\0" (five chars) and
+"false\0" (six chars) plus one additional char used to ensure that, e.g.,
 "falsely" isn't parsed as "false"--only the whole words "true" and "false" are
 accepted. (Refer to the implementation below for further details.)
 */
