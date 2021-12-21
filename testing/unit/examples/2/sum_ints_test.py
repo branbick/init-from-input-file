@@ -10,8 +10,8 @@
 # 2. Execute the following command: python3 -m unittest sum_ints_test.py -v
 
 from cffi import FFI  # load
-from importlib import import_module  # load
 from uuid import uuid4  # load
+from importlib import import_module  # load
 import unittest  # AddIntsTest
 
 def load(file_name_no_ext):
