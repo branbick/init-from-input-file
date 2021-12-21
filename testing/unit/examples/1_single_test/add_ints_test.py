@@ -1,6 +1,6 @@
 from cffi import FFI  # load
 from importlib import import_module  # load
-import unittest  # AddIntsTest
+from unittest import TestCase  # AddIntsTest
 
 def load(file_name_no_ext):
     # Open the header (.h) and source (.c) files
@@ -20,11 +20,13 @@ def load(file_name_no_ext):
         # Build the registered C program
         ffibuilder.compile()
 
+    # Import the module corresponding to the C program and return its lib
+    # member. The latter's members are, effectively, the C functions.
     return import_module(module_name).lib
 
 
-class AddIntsTest(unittest.TestCase):
+class AddIntsTest(TestCase):
 
     def test_add_ints(self):
         module_lib = load('add_ints')
-        self.assertEqual(module_lib.add_ints(1, 2), 1 + 2)
+        self.assertEqual(module_lib.add_ints(1, 2), 1+2)
