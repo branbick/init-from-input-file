@@ -8,6 +8,7 @@
 # 1. Navigate into the directory containing this script
 # 2. Execute the following command: python3 -m unittest add_ints_test.py -v
 
+from types import ModuleType
 from cffi import FFI  # load
 from importlib import import_module  # load
 import unittest  # AddIntsTest
