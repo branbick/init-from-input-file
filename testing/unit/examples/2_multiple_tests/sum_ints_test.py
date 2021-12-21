@@ -1,4 +1,4 @@
-# Script-specific resource: uuid — UUID objects according to RFC 4122: https://docs.python.org/3/library/uuid.html
+# SCRIPT-SPECIFIC RESOURCE: uuid — UUID objects according to RFC 4122: https://docs.python.org/3/library/uuid.html
 
 from cffi import FFI  # load
 from uuid import uuid4  # load
