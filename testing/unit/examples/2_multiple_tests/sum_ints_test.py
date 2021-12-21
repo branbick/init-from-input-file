@@ -1,13 +1,4 @@
-# Resources:
-# - Alexander Steffen - Writing unit tests for C code in Python: https://youtu.be/zW_HyDTPjO0
-# - CFFI documentation: https://cffi.readthedocs.io/en/latest/index.html
-# - uuid — UUID objects according to RFC 4122: https://docs.python.org/3/library/uuid.html
-# - importlib — The implementation of import: https://docs.python.org/3/library/importlib.html
-# - unittest — Unit testing framework: https://docs.python.org/3/library/unittest.html
-
-# To run the test, from the command line, ...
-# 1. Navigate into the directory containing this script
-# 2. Execute the following command: python3 -m unittest sum_ints_test.py -v
+# Unique resource: uuid — UUID objects according to RFC 4122: https://docs.python.org/3/library/uuid.html
 
 from cffi import FFI  # load
 from uuid import uuid4  # load

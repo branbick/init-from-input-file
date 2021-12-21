@@ -1,13 +1,3 @@
-# Resources:
-# - Alexander Steffen - Writing unit tests for C code in Python: https://youtu.be/zW_HyDTPjO0
-# - CFFI documentation: https://cffi.readthedocs.io/en/latest/index.html
-# - importlib — The implementation of import: https://docs.python.org/3/library/importlib.html
-# - unittest — Unit testing framework: https://docs.python.org/3/library/unittest.html
-
-# To run the test, from the command line, ...
-# 1. Navigate into the directory containing this script
-# 2. Execute the following command: python3 -m unittest add_ints_test.py -v
-
 from cffi import FFI  # load
 from importlib import import_module  # load
 import unittest  # AddIntsTest
