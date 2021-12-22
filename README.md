@@ -9,7 +9,7 @@ where the right-hand side (i.e., floating constant / floating-point literal) mus
 double altitudeInitial;  /* meters (m) */
 const bool kSuccessFlag = initFromInputFile("missile.inp", "double", "altInit", &altitudeInitial);
 ```
-where `init_from_input_file.h` must be `#include`d. Breaking down the above, the input text file `missile.inp` is searched for the key `altInit`, and the value corresponding to that key is assigned to `altitudeInitial` (passed by reference), which is a `double`; and, assuming success, `true` is returned by `initFromInputFile`. A relevant snippet of `missile.inp` could be ...
+where `src/init_from_input_file.h` must be `#include`d. Breaking down the above, the input text file `missile.inp` is searched for the key `altInit`, and the value corresponding to that key is assigned to `altitudeInitial` (passed by reference), which is a `double`; and, assuming success, `true` is returned by `initFromInputFile`. A relevant snippet of `missile.inp` could be ...
 ```
 latInit 33.2385  # Initial latitude in degrees (deg)
 lonInit -106.3464  # Initial longitude in degrees (deg)
@@ -58,7 +58,7 @@ The following  table lists the supported `kVarType` arguments that can be passed
 
 ## How to use this tool
 1. Download the source code from [GitHub](https://github.com/branbick/init-from-input-file) into the appropriate folder on your machine.
-2. `#include` the header file `init_from_input_file.h` in the C and/or C++ source code you desire to use the aforementioned functionality in.
+2. `#include` the header file `src/init_from_input_file.h` in the C and/or C++ source code you desire to use the aforementioned functionality in.
 3. Call `initFromInputFile`--which is declared in the latter header file--with the following arguments, in order:
    1. `const char* kFileName`: The relative or absolute path of the input text file
    2. `const char* kVarType`: The type of the to-be-initialized variable (discussed in the previous section)
