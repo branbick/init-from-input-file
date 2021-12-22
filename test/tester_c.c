@@ -1,4 +1,4 @@
-#include "../init_from_input_file.h"
+#include "../lib/init_from_input_file.h"
 
 #include <stdbool.h>
 #include <stdio.h>

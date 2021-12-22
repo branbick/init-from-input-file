@@ -9,8 +9,8 @@
 				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"../init_from_input_file.c",  // Project-unique
-				"../init_tools.c",  // Project-unique
+				"../src/init_from_input_file.c",  // Project-unique
+				"../src/init_tools.c",  // Project-unique
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
@@ -38,8 +38,8 @@
 				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"../init_from_input_file.c",  // Project-unique
-				"../init_tools.c",  // Project-unique
+				"../src/init_from_input_file.c",  // Project-unique
+				"../src/init_tools.c",  // Project-unique
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
@@ -64,8 +64,8 @@
 				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"..\\init_from_input_file.c",  // Project-unique
-				"..\\init_tools.c",  // Project-unique
+				"..\\src\\init_from_input_file.c",  // Project-unique
+				"..\\src\\init_tools.c",  // Project-unique
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
@@ -90,8 +90,8 @@
 				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"..\\init_from_input_file.c",  // Project-unique
-				"..\\init_tools.c",  // Project-unique
+				"..\\src\\init_from_input_file.c",  // Project-unique
+				"..\\src\\init_tools.c",  // Project-unique
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
