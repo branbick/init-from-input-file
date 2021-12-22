@@ -1,4 +1,4 @@
-#include "../lib/init_tools.h"
+#include "init_tools.h"
 
 #include <string.h>
 #include <ctype.h>

@@ -1,5 +1,5 @@
-#include "../lib/init_from_input_file.h"
-#include "../lib/init_tools.h"
+#include "init_from_input_file.h"
+#include "init_tools.h"
 
 #include <stdio.h>
 #include <stdlib.h>
