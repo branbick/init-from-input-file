@@ -1,3 +1,0 @@
-/home/branbick/git/init-from-input-file/test/build/CMakeFiles/tester_cpp.dir
-/home/branbick/git/init-from-input-file/test/build/CMakeFiles/edit_cache.dir
-/home/branbick/git/init-from-input-file/test/build/CMakeFiles/rebuild_cache.dir

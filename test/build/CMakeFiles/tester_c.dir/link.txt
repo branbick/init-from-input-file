@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/tester_c.dir/tester_c.c.o CMakeFiles/tester_c.dir/home/branbick/git/init-from-input-file/src/init_from_input_file.c.o CMakeFiles/tester_c.dir/home/branbick/git/init-from-input-file/src/init_tools.c.o -o tester_c 
