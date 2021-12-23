@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22.1)  # Latest version as of 12/23/21
+cmake_minimum_required(VERSION 3.22.1)
 
 set(project_name freadChar_test)
 
@@ -14,7 +14,7 @@ project(
 include(FetchContent)
 FetchContent_Declare(
     googletest
-    URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip  # Latest release as of 12/23/21
+    URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
 )
 FetchContent_MakeAvailable(googletest)
 
