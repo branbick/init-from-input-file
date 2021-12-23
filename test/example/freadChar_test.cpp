@@ -5,7 +5,7 @@ extern "C" {
 
 #include <gtest/gtest.h>
 
-TEST(FreadCharTest, BasicAssertions)
+TEST(FreadCharTest, FreadCharTestSimple)
 {
     const char* const kFileName = "../freadChar_test.inp";
     FILE* const pFile = fopen(kFileName, "r");
