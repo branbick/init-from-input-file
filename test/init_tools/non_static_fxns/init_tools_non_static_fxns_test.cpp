@@ -15,7 +15,16 @@ TEST(FreadCharTest, Comprehensive)
     char c;
 
     EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
-    EXPECT_EQ(c, 'a');
+    EXPECT_EQ(c, '!');
+
+    EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
+    EXPECT_EQ(c, '9');
+
+    EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
+    EXPECT_EQ(c, 'A');
+
+    EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
+    EXPECT_EQ(c, 'z');
 
     EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
     EXPECT_EQ(c, '\n');
