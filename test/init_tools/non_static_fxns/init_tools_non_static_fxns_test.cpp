@@ -14,22 +14,25 @@ TEST(FreadCharTest, Comprehensive)
     
     char c;
 
-    EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
-    EXPECT_EQ(c, '!');
+    ASSERT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
+    ASSERT_EQ(c, '!');
 
-    EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
-    EXPECT_EQ(c, '9');
+    ASSERT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
+    ASSERT_EQ(c, '9');
 
-    EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
-    EXPECT_EQ(c, 'A');
+    ASSERT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
+    ASSERT_EQ(c, ' ');
 
-    EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
-    EXPECT_EQ(c, 'z');
+    ASSERT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
+    ASSERT_EQ(c, 'A');
 
-    EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
-    EXPECT_EQ(c, '\n');
+    ASSERT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
+    ASSERT_EQ(c, 'z');
 
-    EXPECT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_FEOF);
+    ASSERT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_ALL_GOOD);
+    ASSERT_EQ(c, '\n');
+
+    ASSERT_EQ(freadChar(pFile, &c), FILE_IO_STATUS_FEOF);
 
     fclose(pFile);
 }
