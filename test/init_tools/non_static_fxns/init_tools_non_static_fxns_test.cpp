@@ -1,4 +1,4 @@
-// Prevent C++ from name-mangling the C code
+// Prevent the C++ compiler from name-mangling the C code
 extern "C" {
 #include "../../../src/init_tools.h"
 }
@@ -7,35 +7,41 @@ extern "C" {
 
 #include <cstring>
 
-TEST(StripAndLowerTest, NoWhiteSpaceAndCamelCase)
+TEST(PrintErrorTest, CaptureStderr)
 {
-    const char* const kStrIn {"NoWhiteSpaceAndCamelCase"};
-    char* const strOut {new char[std::strlen(kStrIn) + 1]};  // "+ 1" for '\0'
+    // TODO: Clean up (e.g., add comments and use non-literal for errMsg len)
+    // Resources:
+    // - https://github.com/google/googletest/search?q=capturestderr
+    // - https://stackoverflow.com/questions/3803465/how-to-capture-stdout-stderr-with-googletest
+    const char* const kMsg {"Dummy message"};
+    const char* const kFileMacro {__FILE__};
+    const int kLineMacro {__LINE__};
+    const char* const kFileName {"Dummy file name"};
+    const char* const kKeyName {"Dummy key name"};
 
-    stripAndLower(kStrIn, strOut);
-    EXPECT_STREQ(strOut, "nowhitespaceandcamelcase");
+    // TODO: May not be wise bc capturing stderr is part of the private API
+    testing::internal::CaptureStderr();
 
-    delete[] strOut;
+    printError(kMsg, kFileMacro, kLineMacro, kFileName, kKeyName);
+
+    char* const errMsg {new char[255]};
+
+    sprintf(errMsg,
+            "ERROR: %s\n       Source: %s | Line: %d | Input: %s | Key: %s\n",
+            kMsg, kFileMacro, kLineMacro, kFileName, kKeyName);
+
+    EXPECT_STREQ(errMsg, testing::internal::GetCapturedStderr().c_str());
+
+    delete[] errMsg;
 }
 
-TEST(StripAndLowerTest, WhiteSpaceAndLowercase)
+TEST(StripAndLowerTest, NoWhiteSpaceAndLowercase)
 {
-    const char* const kStrIn {"white	space and\nlowercase"};
+    const char* const kStrIn {"nowhitespaceandlowercase"};
     char* const strOut {new char[std::strlen(kStrIn) + 1]};  // "+ 1" for '\0'
 
     stripAndLower(kStrIn, strOut);
-    EXPECT_STREQ(strOut, "whitespaceandlowercase");
-
-    delete[] strOut;
-}
-
-TEST(StripAndLowerTest, WhiteSpaceAndUppercase)
-{
-    const char* const kStrIn {"WHITE	SPACE AND\nUPPERCASE"};
-    char* const strOut {new char[std::strlen(kStrIn) + 1]};  // "+ 1" for '\0'
-
-    stripAndLower(kStrIn, strOut);
-    EXPECT_STREQ(strOut, "whitespaceanduppercase");
+    EXPECT_STREQ(strOut, "nowhitespaceandlowercase");
 
     delete[] strOut;
 }
@@ -47,6 +53,17 @@ TEST(StripAndLowerTest, WhiteSpaceAndMixedCase)
 
     stripAndLower(kStrIn, strOut);
     EXPECT_STREQ(strOut, "whitespaceandmixedcase");
+
+    delete[] strOut;
+}
+
+TEST(StripAndLowerTest, WhiteSpaceAndMixedCaseAndMore)
+{
+    const char* const kStrIn {"whITe	SpacE anD\nMiXedCASe+9  &.\n 26"};
+    char* const strOut {new char[std::strlen(kStrIn) + 1]};  // "+ 1" for '\0'
+
+    stripAndLower(kStrIn, strOut);
+    EXPECT_STREQ(strOut, "whitespaceandmixedcase+9&.26");
 
     delete[] strOut;
 }
