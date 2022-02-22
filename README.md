@@ -1,6 +1,6 @@
 # init-from-input-file
 ## Introduction
-`init-from-input-file` allows C and C++ variables to be initialized from an input text file, consequently **eliminating the need to recompile** source code merely due to a changed initialization value. For example, consider a simulation of an air-launch missile. Instead of writing ...
+`init-from-input-file` allows C and C++ variables to be initialized from an input text file, consequently **eliminating the need to recompile** source code merely due to a changed initialization value. For example, consider a simulation of an air-launched missile. Instead of writing ...
 ```
 const double kAltitudeInitial = 10000.0;  /* meters (m) */
 ```
