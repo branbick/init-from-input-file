@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)  # GoogleTest requires at least C++11
 project(
     ${project_name}
     LANGUAGES C CXX
-    DESCRIPTION "Testing the non-static function declared in src/init_tools.h"
+    DESCRIPTION "Testing the non-static functions declared in src/init_tools.h"
 )
 
 # Use GoogleTest without having it installed locally beforehand
