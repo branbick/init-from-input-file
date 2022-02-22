@@ -133,9 +133,6 @@ TEST(FindKeyTest, KeyFollowedByNewline)
     fclose(pFile);
 }
 
-// TODO: Create tests for findValue(). Base them on the following:
-// https://github.com/branbick/init-from-input-file/tree/unit-testing#rules-for-the-input-text-file.
-
 TEST(FindValueTest, KeyAndValueExist)
 {
     const char* const kFileName {"../input/FindValueTest.inp"};
