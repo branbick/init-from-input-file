@@ -1,5 +1,5 @@
 # Dummy comment
 dummyKey "dummy value"
 
-keyExists "value exists"  # Hooray!
-valueDoesNotExist   
+keyAndValueExist "Hooray!"  # Success
+keyExistsButValueDoesNot   

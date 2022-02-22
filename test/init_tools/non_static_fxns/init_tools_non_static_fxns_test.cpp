@@ -142,7 +142,7 @@ TEST(FindValueTest, KeyAndValueExist)
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
-    const char* const kKeyName {"keyExists"};
+    const char* const kKeyName {"keyAndValueExist"};
 
     EXPECT_TRUE(findKey(pFile, kKeyName, kFileName));
     EXPECT_TRUE(findValue(pFile, kFileName, kKeyName));
@@ -150,13 +150,13 @@ TEST(FindValueTest, KeyAndValueExist)
     fclose(pFile);
 }
 
-TEST(FindValueTest, ValueDoesNotExist)
+TEST(FindValueTest, KeyExistsButValueDoesNot)
 {
     const char* const kFileName {"../input/FindValueTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
-    const char* const kKeyName {"valueDoesNotExist"};
+    const char* const kKeyName {"keyExistsButValueDoesNot"};
 
     EXPECT_TRUE(findKey(pFile, kKeyName, kFileName));
     EXPECT_FALSE(findValue(pFile, kFileName, kKeyName));
