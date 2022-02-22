@@ -80,7 +80,7 @@ TEST(FindKeyTest, KeyAndValueExist)
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_TRUE(findKey(pFile, "keyExists", kFileName));
+    EXPECT_TRUE(findKey(pFile, "keyAndValueExist", kFileName));
 
     fclose(pFile);
 }
@@ -109,6 +109,18 @@ TEST(FindKeyTest, KeyNotLeftAligned)
     fclose(pFile);
 }
 
+TEST(FindKeyTest, KeyAndValueNotSeparated)
+{
+    const char* const kFileName {"../input/FindKeyTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(findKey(pFile, "keyAndValueNotSeparated", kFileName));
+
+    fclose(pFile);
+}
+
 TEST(FindKeyTest, KeyFollowedByNewline)
 {
     const char* const kFileName {"../input/FindKeyTest.inp"};
@@ -117,6 +129,37 @@ TEST(FindKeyTest, KeyFollowedByNewline)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
     EXPECT_FALSE(findKey(pFile, "keyFollowedByNewline", kFileName));
+
+    fclose(pFile);
+}
+
+// TODO: Create tests for findValue(). Base them on the following:
+// https://github.com/branbick/init-from-input-file/tree/unit-testing#rules-for-the-input-text-file.
+
+TEST(FindValueTest, KeyAndValueExist)
+{
+    const char* const kFileName {"../input/FindValueTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+    const char* const kKeyName {"keyExists"};
+
+    EXPECT_TRUE(findKey(pFile, kKeyName, kFileName));
+    EXPECT_TRUE(findValue(pFile, kFileName, kKeyName));
+
+    fclose(pFile);
+}
+
+TEST(FindValueTest, ValueDoesNotExist)
+{
+    const char* const kFileName {"../input/FindValueTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+    const char* const kKeyName {"valueDoesNotExist"};
+
+    EXPECT_TRUE(findKey(pFile, kKeyName, kFileName));
+    EXPECT_FALSE(findValue(pFile, kFileName, kKeyName));
 
     fclose(pFile);
 }
