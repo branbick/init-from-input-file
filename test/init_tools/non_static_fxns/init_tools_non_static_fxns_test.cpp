@@ -13,8 +13,8 @@ TEST(PrintErrorTest, StderrBuffer)
     const char* const kMsg {"Dummy message (ignore me)"};
     const char* const kFileMacro {__FILE__};
     const int kLineMacro {__LINE__};
-    const char* const kFileName {"Dummy file name"};
-    const char* const kKeyName {"Dummy key name"};
+    const char* const kFileName {"dummy_file_name"};
+    const char* const kKeyName {"dummyKeyName"};
 
     char buf[BUFSIZ];
     setbuf(stderr, buf);
@@ -73,9 +73,57 @@ TEST(StripAndLowerTest, WhiteSpaceAndMixedCaseAndMore)
     delete[] strOut;
 }
 
+TEST(FindKeyTest, KeyAndValueExist)
+{
+    const char* const kFileName {"../input/FindKeyTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_TRUE(findKey(pFile, "keyExists", kFileName));
+
+    fclose(pFile);
+}
+
+TEST(FindKeyTest, KeyDoesNotExist)
+{
+    const char* const kFileName {"../input/FindKeyTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(findKey(pFile, "keyDoesNotExist", kFileName));
+
+    fclose(pFile);
+}
+
+TEST(FindKeyTest, KeyNotLeftAligned)
+{
+    const char* const kFileName {"../input/FindKeyTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(findKey(pFile, "keyNotLeftAligned", kFileName));
+
+    fclose(pFile);
+}
+
+TEST(FindKeyTest, KeyFollowedByNewline)
+{
+    const char* const kFileName {"../input/FindKeyTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(findKey(pFile, "keyFollowedByNewline", kFileName));
+
+    fclose(pFile);
+}
+
 TEST(FreadCharTest, Comprehensive)
 {
-    const char* const kFileName {"../FreadCharTest_Comprehensive.inp"};
+    const char* const kFileName {"../input/FreadCharTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;

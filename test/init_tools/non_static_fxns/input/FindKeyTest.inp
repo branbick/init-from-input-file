@@ -1,0 +1,9 @@
+# Dummy comment
+dummyKey "dummy value"
+
+keyExists "value exists"  # Hooray!
+  keyNotLeftAligned "so it won't be found"
+
+# A search for the below key will fail because the key is immediately
+# followed by a newline (instead of a space or tab)
+keyFollowedByNewline
