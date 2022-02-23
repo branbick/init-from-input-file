@@ -6,6 +6,20 @@ extern "C" {
 #include <gtest/gtest.h>
 
 // TODO: Add tests
+TEST(CheckStartOfLineTest, KeyDoesNotExist)
+{
+    const char* const kFileName {
+        "../input/CheckStartOfLineTest_KeyDoesNotExist.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_EQ(checkStartOfLine(pFile, "keyDoesNotExist"),
+              FILE_IO_STATUS_KEY_NOT_FOUND);
+
+    fclose(pFile);
+}
+
 TEST(CheckStartOfLineTest, KeyFollowedBySpace)
 {
     const char* const kFileName {
