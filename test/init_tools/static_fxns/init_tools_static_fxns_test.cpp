@@ -33,3 +33,17 @@ TEST(CheckStartOfLineTest, KeyFollowedByTab)
 
     fclose(pFile);
 }
+
+TEST(CheckStartOfLineTest, KeyFollowedByNewline)
+{
+    const char* const kFileName {
+        "../input/CheckStartOfLineTest_KeyFollowedByNewline.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_EQ(checkStartOfLine(pFile, "keyFollowedByNewline"),
+              FILE_IO_STATUS_VALUE_NOT_FOUND);
+
+    fclose(pFile);
+}

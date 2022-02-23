@@ -1,0 +1,3 @@
+keyFollowedByNewline
+# Calling checkStartOfLine with the above key will fail because the key is
+# immediately followed by a newline (instead of a space or tab)
