@@ -23,7 +23,6 @@ enable_testing()
 add_executable(
     ${project_name}
     ${project_name}.cpp
-    ../../../src/init_tools.h
     ../../../src/init_tools.c
 )
 
