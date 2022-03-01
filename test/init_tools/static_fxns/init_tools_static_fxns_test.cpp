@@ -101,3 +101,16 @@ TEST(ProceedToNextLineTest, FreadCharEofOnlyOneLine)
 
     fclose(pFile);
 }
+
+TEST(ProceedToNextLineTest, MultipleLines)
+{
+    const char* const kFileName {
+        "../input/ProceedToNextLineTest_MultipleLines.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_EQ(proceedToNextLine(pFile), FILE_IO_STATUS_ALL_GOOD);
+
+    fclose(pFile);
+}
