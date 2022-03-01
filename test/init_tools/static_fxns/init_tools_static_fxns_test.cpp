@@ -6,15 +6,15 @@ extern "C" {
 #include <gtest/gtest.h>
 
 // TODO: Add tests
-TEST(CheckStartOfLineTest, FreadCharEOF)
+TEST(CheckStartOfLineTest, FreadCharEof)
 {
     const char* const kFileName {
-        "../input/CheckStartOfLineTest_FreadCharEOF.inp"};
+        "../input/CheckStartOfLineTest_FreadCharEof.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_EQ(checkStartOfLine(pFile, "freadCharEOF"),
+    EXPECT_EQ(checkStartOfLine(pFile, "freadCharEof"),
               FILE_IO_STATUS_FEOF);
 
     fclose(pFile);
@@ -72,6 +72,32 @@ TEST(CheckStartOfLineTest, KeyDoesNotExist)
 
     EXPECT_EQ(checkStartOfLine(pFile, "keyDoesNotExist"),
               FILE_IO_STATUS_KEY_NOT_FOUND);
+
+    fclose(pFile);
+}
+
+TEST(ProceedToNextLineTest, FreadCharEofEmptyFile)
+{
+    const char* const kFileName {
+        "../input/ProceedToNextLineTest_FreadCharEofEmptyFile.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_EQ(proceedToNextLine(pFile), FILE_IO_STATUS_FEOF);
+
+    fclose(pFile);
+}
+
+TEST(ProceedToNextLineTest, FreadCharEofOnlyOneLine)
+{
+    const char* const kFileName {
+        "../input/ProceedToNextLineTest_FreadCharEofOnlyOneLine.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_EQ(proceedToNextLine(pFile), FILE_IO_STATUS_FEOF);
 
     fclose(pFile);
 }
