@@ -14,8 +14,7 @@ TEST(CheckStartOfLineTest, FreadCharEof)
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_EQ(checkStartOfLine(pFile, "freadCharEof"),
-              FILE_IO_STATUS_FEOF);
+    EXPECT_EQ(checkStartOfLine(pFile, "freadCharEof"), FILE_IO_STATUS_FEOF);
 
     fclose(pFile);
 }
@@ -111,6 +110,59 @@ TEST(ProceedToNextLineTest, MultipleLines)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
     EXPECT_EQ(proceedToNextLine(pFile), FILE_IO_STATUS_ALL_GOOD);
+
+    fclose(pFile);
+}
+
+TEST(SkipSpacesAndTabsTest, FreadCharEofEmptyFile)
+{
+    const char* const kFileName {
+        "../input/SkipSpacesAndTabsTest_FreadCharEofEmptyFile.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_EQ(skipSpacesAndTabs(pFile), FILE_IO_STATUS_FEOF);
+
+    fclose(pFile);
+}
+
+TEST(SkipSpacesAndTabsTest, FreadCharEofOnlyOneLineOfSpacesAndTabs)
+{
+    const char* const kFileName {
+        "../input/"
+        "SkipSpacesAndTabsTest_FreadCharEofOnlyOneLineOfSpacesAndTabs.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_EQ(skipSpacesAndTabs(pFile), FILE_IO_STATUS_FEOF);
+
+    fclose(pFile);
+}
+
+TEST(SkipSpacesAndTabsTest, NewLineBeforeNonSpaceNonTab)
+{
+    const char* const kFileName {
+        "../input/SkipSpacesAndTabsTest_NewLineBeforeNonSpaceNonTab.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_EQ(skipSpacesAndTabs(pFile), FILE_IO_STATUS_VALUE_NOT_FOUND);
+
+    fclose(pFile);
+}
+
+TEST(SkipSpacesAndTabsTest, NonSpaceNonTabBeforeNewLine)
+{
+    const char* const kFileName {
+        "../input/SkipSpacesAndTabsTest_NonSpaceNonTabBeforeNewLine.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_EQ(skipSpacesAndTabs(pFile), FILE_IO_STATUS_VALUE_FOUND);
 
     fclose(pFile);
 }
