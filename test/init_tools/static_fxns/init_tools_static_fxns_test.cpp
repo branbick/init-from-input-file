@@ -5,7 +5,6 @@ extern "C" {
 
 #include <gtest/gtest.h>
 
-// TODO: Add tests
 TEST(CheckStartOfLineTest, FreadCharEof)
 {
     const char* const kFileName {
