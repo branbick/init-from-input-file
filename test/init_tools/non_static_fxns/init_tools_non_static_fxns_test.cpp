@@ -10,7 +10,7 @@ extern "C" {
 
 // TODO: Move this one test to a separate folder with its own CMakeLists.txt.
 //       Only need an error message printed for this one test (and the buffer
-//       manipulation is screwy).
+//       manipulation is screwy). Will have to update run_tests.sh.
 TEST(PrintErrorTest, StderrBuffer)
 {
     const char* const kMsg {"Dummy message (ignore me)"};
