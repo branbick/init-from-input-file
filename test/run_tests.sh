@@ -12,7 +12,6 @@ for src_file in "${src_files[@]}"; do
     for fxn_type in "${fxn_types[@]}"; do
         cd "${src_file}/${fxn_type}"
         if [ ! -d "$build_dir" ]; then
-            echo "Creating build folder"
             mkdir "$build_dir"
             cmake -S . -B "$build_dir"
         fi
