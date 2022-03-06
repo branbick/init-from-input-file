@@ -24,6 +24,7 @@ enable_testing()
 add_executable(
     ${project_name}
     ${project_name}.cpp
+    ../../../src/init_tools.c
 )
 
 target_compile_definitions(${project_name} PRIVATE PRINT_ERRORS)

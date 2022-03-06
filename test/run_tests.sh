@@ -11,8 +11,11 @@ build_dir='build'  # Level 3
 for src_file in "${src_files[@]}"; do
     for fxn_type in "${fxn_types[@]}"; do
         cd "${src_file}/${fxn_type}"
-        mkdir "$build_dir"
-        cmake -S . -B "$build_dir"
+        if [ ! -d "$build_dir" ]; then
+            echo "Creating build folder"
+            mkdir "$build_dir"
+            cmake -S . -B "$build_dir"
+        fi
         cd "$build_dir"
         make
         ./"${src_file}_${fxn_type}_test"

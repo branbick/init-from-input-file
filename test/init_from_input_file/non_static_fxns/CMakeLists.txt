@@ -25,6 +25,7 @@ add_executable(
     ${project_name}
     ${project_name}.cpp
     ../../../src/init_from_input_file.c
+    ../../../src/init_tools.c
 )
 
 target_compile_definitions(${project_name} PRIVATE PRINT_ERRORS)
