@@ -13,7 +13,7 @@ TEST(PrintErrorTest, StderrBuffer)
     const char* const kMsg {"Dummy message (ignore me)"};
     const char* const kFileMacro {__FILE__};
     const int kLineMacro {__LINE__};
-    const char* const kFileName {"dummy_file_name"};
+    const char* const kFileName {"dummy_file_name.inp"};
     const char* const kKeyName {"dummyKeyName"};
 
     char buf[BUFSIZ];

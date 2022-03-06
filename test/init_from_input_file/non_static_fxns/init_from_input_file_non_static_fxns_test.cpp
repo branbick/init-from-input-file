@@ -10,7 +10,7 @@ TEST(InitFromInputFileTest, FileDoesNotExist)
 {
     int dummyVar {0};
 
-    EXPECT_FALSE(initFromInputFile("file_does_not_exist",
+    EXPECT_FALSE(initFromInputFile("file_does_not_exist.inp",
                                    "dummyVarType",
                                    "dummyKeyName",
                                    &dummyVar));
