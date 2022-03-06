@@ -10,8 +10,7 @@ build_dir='build'  # Level 3
 # Run tests
 for src_file in "${src_files[@]}"; do
     for fxn_type in "${fxn_types[@]}"; do
-        cd "$src_file"
-        cd "$fxn_type"
+        cd "${src_file}/${fxn_type}"
         mkdir "$build_dir"
         cmake -S . -B "$build_dir"
         cd "$build_dir"
