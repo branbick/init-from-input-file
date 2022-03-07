@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-set(project_name init_from_input_file_non_static_fxns_test)
+set(project_name init_tools_non_static_fxns_other_test)
 
 set(CMAKE_CXX_STANDARD 17)  # GoogleTest requires at least C++11
 
 project(
     ${project_name}
     LANGUAGES C CXX
-    DESCRIPTION "Testing the non-static functions declared in \
-                 src/init_from_input_file.h"
+    DESCRIPTION "Testing the non-static functions EXCEPT printError declared \
+                 in src/init_tools.h"
 )
 
 # Use GoogleTest without having it installed locally beforehand
@@ -24,8 +24,7 @@ enable_testing()
 add_executable(
     ${project_name}
     ${project_name}.cpp
-    ../../../src/init_from_input_file.c
-    ../../../src/init_tools.c
+    ../../../../src/init_tools.c
 )
 
 target_compile_options(${project_name} PRIVATE -Wall -Wextra -Wpedantic)

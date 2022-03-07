@@ -57,7 +57,7 @@ The following  table lists the supported `kVarType` arguments that can be passed
 | `"string"` | `char*` |
 
 ## How to use this tool
-1. Download the source code from [GitHub](https://github.com/branbick/init-from-input-file) into the appropriate folder on your machine.
+1. Download the source code from [GitHub](https://github.com/branbick/init-from-input-file) into the appropriate directory on your machine.
 2. `#include` the header file `src/init_from_input_file.h` in the C and/or C++ source code you desire to use the aforementioned functionality in.
 3. Call `initFromInputFile`--which is declared in the latter header file--with the following arguments, in order:
    1. `const char* kFileName`: The relative or absolute path of the input text file

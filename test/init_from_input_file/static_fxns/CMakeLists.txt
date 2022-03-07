@@ -27,7 +27,6 @@ add_executable(
     ../../../src/init_tools.c
 )
 
-target_compile_definitions(${project_name} PRIVATE PRINT_ERRORS)
 target_compile_options(${project_name} PRIVATE -Wall -Wextra -Wpedantic)
 
 target_link_libraries(

@@ -1,23 +1,28 @@
 # !/usr/bin/bash
 
-# Names of relevant subfolders in test (level-0) folder
-# TODO: Regarding line below, uncomment "'init_from_input_file')  # Level 1"
-#       after init_from_input_file tests are written
-src_files=('init_tools')  #'init_from_input_file')  # Level 1
+# Names of relevant subdirectories in test (level-0) directory
+# TODO: Regarding two lines below, uncomment first and delete second after
+#       init_from_input_file tests are written
+# src_files=('init_from_input_file' 'init_tools')  # Level 1
+src_files='init_tools'  # Level 1
 fxn_types=('non_static_fxns' 'static_fxns')  # Level 2
-build_dir='build'  # Level 3
+fxn_names=('other' 'printError')  # Level 3 for init_tools/non_static_fxns only
 
 # Run tests
 for src_file in "${src_files[@]}"; do
+    cd "$src_file"
     for fxn_type in "${fxn_types[@]}"; do
-        cd "${src_file}/${fxn_type}"
-        if [ ! -d "$build_dir" ]; then
-            mkdir "$build_dir"
-            cmake -S . -B "$build_dir"
+        cd "$fxn_type"
+        if "$src_file"=='init_tools' && "$fxn_type"=='non_static_fxns'; then
+            for fxn_name in "${fxn_names[@]}"; do
+                cd "$fxn_name"
+                ./'run_test.sh'
+                cd ..
+            done
+        else
+            ./'run_test.sh'
         fi
-        cd "$build_dir"
-        make
-        ./"${src_file}_${fxn_type}_test"
-        cd ../../..  # Return to test folder
+        cd ..
     done
+    cd ..
 done
