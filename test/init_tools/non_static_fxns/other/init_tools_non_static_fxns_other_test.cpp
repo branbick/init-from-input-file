@@ -47,7 +47,7 @@ TEST(FindKeyTest, KeyAndValueExist)
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_TRUE(findKey(pFile, "keyAndValueExist", kFileName));
+    EXPECT_TRUE(findKey(pFile, "keyAndValueExist"));
 
     fclose(pFile);
 }
@@ -59,7 +59,7 @@ TEST(FindKeyTest, KeyDoesNotExist)
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_FALSE(findKey(pFile, "keyDoesNotExist", kFileName));
+    EXPECT_FALSE(findKey(pFile, "keyDoesNotExist"));
 
     fclose(pFile);
 }
@@ -71,7 +71,7 @@ TEST(FindKeyTest, KeyNotLeftAligned)
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_FALSE(findKey(pFile, "keyNotLeftAligned", kFileName));
+    EXPECT_FALSE(findKey(pFile, "keyNotLeftAligned"));
 
     fclose(pFile);
 }
@@ -83,7 +83,7 @@ TEST(FindKeyTest, KeyAndValueNotSeparated)
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_FALSE(findKey(pFile, "keyAndValueNotSeparated", kFileName));
+    EXPECT_FALSE(findKey(pFile, "keyAndValueNotSeparated"));
 
     fclose(pFile);
 }
@@ -95,7 +95,7 @@ TEST(FindKeyTest, KeyFollowedByNewline)
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_FALSE(findKey(pFile, "keyFollowedByNewline", kFileName));
+    EXPECT_FALSE(findKey(pFile, "keyFollowedByNewline"));
 
     fclose(pFile);
 }
@@ -106,10 +106,9 @@ TEST(FindValueTest, KeyAndValueExist)
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
-    const char* const kKeyName {"keyAndValueExist"};
 
-    EXPECT_TRUE(findKey(pFile, kKeyName, kFileName));
-    EXPECT_TRUE(findValue(pFile, kFileName, kKeyName));
+    EXPECT_TRUE(findKey(pFile, "keyAndValueExist"));
+    EXPECT_TRUE(findValue(pFile));
 
     fclose(pFile);
 }
@@ -120,10 +119,9 @@ TEST(FindValueTest, KeyExistsButValueDoesNot)
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
-    const char* const kKeyName {"keyExistsButValueDoesNot"};
 
-    EXPECT_TRUE(findKey(pFile, kKeyName, kFileName));
-    EXPECT_FALSE(findValue(pFile, kFileName, kKeyName));
+    EXPECT_TRUE(findKey(pFile, "keyExistsButValueDoesNot"));
+    EXPECT_FALSE(findValue(pFile));
 
     fclose(pFile);
 }
