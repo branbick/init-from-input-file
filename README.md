@@ -84,3 +84,9 @@ If the macro `PRINT_ERRORS` is `#define`d, then a message containing the followi
 4. `kKeyName` argument passed to `initFromInputFile`
 
 Detailed error messages greatly help with debugging. If you decide to not always `#define PRINT_ERRORS`, you should *absolutely* do so if `initFromInputFile` has returned `false`.
+
+### Future improvements (`TODO`: Finalize and clean up this section)
+- Develop unit tests that run with `PRINT_ERRORS` `#define`d
+- Regarding the [README](https://github.com/branbick/init-from-input-file/blob/main/README.md#how-to-use-this-tool), add that the two source (i.e., `src/*.c`) files need to be incorporated into the build
+- Regarding the `run_test` scripts, figure out how to get the name of the `.cpp` file so it's not just hard-coded
+- Regarding the unit tests, maybe use [test fixtures](https://google.github.io/googletest/primer.html#same-data-multiple-tests) to avoid code duplication?
