@@ -8,7 +8,5 @@ if [[ ! -d "${build_dir_name}" ]]; then
 fi
 cd "${build_dir_name}"
 make
-# TODO: Is there a way to construct the string below from, e.g., the path to
-#       this file? (Applies to ALL the run_test scripts.)
 ./'init_from_input_file_non_static_fxns_test'  # Name of .cpp file in this dir
 cd ..
