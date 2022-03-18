@@ -1,14 +1,14 @@
-keyChar    A
-keySchar   -1
-keyUchar   1
-keyShort   -2
-keyUshort  2
-keyInt     -3
-keyUint    3
-keyLong    -4
-keyUlong   4
-keyFloat   0.12345
-keyDouble  0.123456789
-keyLdouble 0.12345678987654321
-keyBool    true
-keyString  "Hello, world!"
+charSuccess     A
+scharSuccess   -1
+ucharSuccess    1
+shortSuccess   -2
+ushortSuccess   2
+intSuccess     -3
+uintSuccess     3
+longSuccess    -4
+ulongSuccess    4
+floatSuccess    0.12345
+doubleSuccess   0.123456789
+ldoubleSuccess  0.12345678987654321
+boolSuccess     true
+stringSuccess   "Hello, world!"

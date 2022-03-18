@@ -5,7 +5,6 @@ extern "C" {
 
 #include <gtest/gtest.h>
 
-// TODO: Add tests
 TEST(InitFromInputFileTest, FileDoesNotExist)
 {
     EXPECT_FALSE(initFromInputFile("file_does_not_exist.inp",
@@ -14,158 +13,273 @@ TEST(InitFromInputFileTest, FileDoesNotExist)
                                    NULL));
 }
 
-TEST(InitFromInputFileTest, Char)
+TEST(InitFromInputFileTest, CharSuccess)
 {
     char c;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "char",
-                                  "keyChar",
+                                  "charSuccess",
                                   &c));
     EXPECT_EQ(c, 'A');
 }
 
-TEST(InitFromInputFileTest, SignedChar)
+TEST(InitFromInputFileTest, SignedCharSuccess)
 {
     signed char sc;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "schar",
-                                  "keySchar",
+                                  "scharSuccess",
                                   &sc));
     EXPECT_EQ(sc, -1);
 }
 
-TEST(InitFromInputFileTest, UnsignedChar)
+TEST(InitFromInputFileTest, UnsignedCharSuccess)
 {
     unsigned char uc;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "uchar",
-                                  "keyUchar",
+                                  "ucharSuccess",
                                   &uc));
     EXPECT_EQ(uc, 1U);
 }
 
-TEST(InitFromInputFileTest, Short)
+TEST(InitFromInputFileTest, ShortSuccess)
 {
     short s;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "short",
-                                  "keyShort",
+                                  "shortSuccess",
                                   &s));
     EXPECT_EQ(s, -2);
 }
 
-TEST(InitFromInputFileTest, UnsignedShort)
+TEST(InitFromInputFileTest, UnsignedShortSuccess)
 {
     unsigned short us;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "ushort",
-                                  "keyUshort",
+                                  "ushortSuccess",
                                   &us));
     EXPECT_EQ(us, 2U);
 }
 
-TEST(InitFromInputFileTest, Int)
+TEST(InitFromInputFileTest, IntSuccess)
 {
     int i;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "int",
-                                  "keyInt",
+                                  "intSuccess",
                                   &i));
     EXPECT_EQ(i, -3);
 }
 
-TEST(InitFromInputFileTest, UnsignedInt)
+TEST(InitFromInputFileTest, UnsignedIntSuccess)
 {
     unsigned int ui;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "uint",
-                                  "keyUint",
+                                  "uintSuccess",
                                   &ui));
     EXPECT_EQ(ui, 3U);
 }
 
-TEST(InitFromInputFileTest, Long)
+TEST(InitFromInputFileTest, LongSuccess)
 {
     long l;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "long",
-                                  "keyLong",
+                                  "longSuccess",
                                   &l));
     EXPECT_EQ(l, -4L);
 }
 
-TEST(InitFromInputFileTest, UnsignedLong)
+TEST(InitFromInputFileTest, UnsignedLongSuccess)
 {
     unsigned long ul;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "ulong",
-                                  "keyUlong",
+                                  "ulongSuccess",
                                   &ul));
     EXPECT_EQ(ul, 4UL);
 }
 
-TEST(InitFromInputFileTest, Float)
+TEST(InitFromInputFileTest, FloatSuccess)
 {
     float f;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "float",
-                                  "keyFloat",
+                                  "floatSuccess",
                                   &f));
     EXPECT_EQ(f, 0.12345F);
 }
 
-TEST(InitFromInputFileTest, Double)
+TEST(InitFromInputFileTest, DoubleSuccess)
 {
     double d;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "double",
-                                  "keyDouble",
+                                  "doubleSuccess",
                                   &d));
     EXPECT_EQ(d, 0.123456789);
 }
 
-TEST(InitFromInputFileTest, LongDouble)
+TEST(InitFromInputFileTest, LongDoubleSuccess)
 {
     long double ld;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "ldouble",
-                                  "keyLdouble",
+                                  "ldoubleSuccess",
                                   &ld));
     EXPECT_EQ(ld, 0.12345678987654321L);
 }
 
-TEST(InitFromInputFileTest, Bool)
+TEST(InitFromInputFileTest, BoolSuccess)
 {
     bool b;
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "bool",
-                                  "keyBool",
+                                  "boolSuccess",
                                   &b));
     EXPECT_EQ(b, true);
 }
 
-TEST(InitFromInputFileTest, String)
+TEST(InitFromInputFileTest, StringSuccess)
 {
     char str[16];
 
     EXPECT_TRUE(initFromInputFile("../InitFromInputFileTest.inp",
                                   "string",
-                                  "keyString",
+                                  "stringSuccess",
                                   str));
     EXPECT_STREQ(str, "Hello, world!");
+}
+
+// NOTE: All the "<VariableType>Failure" tests below "EXPECT_FALSE" because,
+//       for each, the key (i.e., "<variableType>Failure") does not exist in
+//       the input file
+TEST(InitFromInputFileTest, CharFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "char",
+                                  "charFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, SignedCharFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "schar",
+                                  "scharFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, UnsignedCharFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "uchar",
+                                  "ucharFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, ShortFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "short",
+                                  "shortFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, UnsignedShortFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "ushort",
+                                  "ushortFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, IntFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "int",
+                                  "intFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, UnsignedIntFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "uint",
+                                  "uintFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, LongFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "long",
+                                  "longFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, UnsignedLongFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "ulong",
+                                  "ulongFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, FloatFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "float",
+                                  "floatFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, DoubleFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "double",
+                                  "doubleFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, LongDoubleFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "ldouble",
+                                  "ldoubleFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, BoolFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "bool",
+                                  "boolFailure",
+                                  NULL));
+}
+
+TEST(InitFromInputFileTest, StringFailure)
+{
+    EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
+                                  "string",
+                                  "stringFailure",
+                                  NULL));
 }
 
 TEST(InitFromInputFileTest, InvalidVarType)
