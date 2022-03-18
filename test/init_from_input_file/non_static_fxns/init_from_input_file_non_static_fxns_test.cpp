@@ -168,8 +168,8 @@ TEST(InitFromInputFileTest, StringSuccess)
 }
 
 // NOTE: All the "<VariableType>Failure" tests below "EXPECT_FALSE" because,
-//       for each, the key (i.e., "<variableType>Failure") does not exist in
-//       the input file
+// for each, the key (i.e., "<variableType>Failure") does not exist in the
+// input file
 TEST(InitFromInputFileTest, CharFailure)
 {
     EXPECT_FALSE(initFromInputFile("../InitFromInputFileTest.inp",
