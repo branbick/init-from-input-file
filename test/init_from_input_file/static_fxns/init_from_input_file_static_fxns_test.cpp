@@ -53,7 +53,7 @@ TEST(InitNonBoolNonStrTest, MatchingFailure)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, CharSuccess)
+TEST(InitNonBoolNonStrTest, Char)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -68,7 +68,7 @@ TEST(InitNonBoolNonStrTest, CharSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, SignedCharSuccess)
+TEST(InitNonBoolNonStrTest, SignedChar)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -83,7 +83,7 @@ TEST(InitNonBoolNonStrTest, SignedCharSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, UnsignedCharSuccess)
+TEST(InitNonBoolNonStrTest, UnsignedChar)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -98,7 +98,7 @@ TEST(InitNonBoolNonStrTest, UnsignedCharSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, ShortSuccess)
+TEST(InitNonBoolNonStrTest, Short)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -113,7 +113,7 @@ TEST(InitNonBoolNonStrTest, ShortSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, UnsignedShortSuccess)
+TEST(InitNonBoolNonStrTest, UnsignedShort)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -128,7 +128,7 @@ TEST(InitNonBoolNonStrTest, UnsignedShortSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, IntSuccess)
+TEST(InitNonBoolNonStrTest, Int)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -143,7 +143,7 @@ TEST(InitNonBoolNonStrTest, IntSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, UnsignedIntSuccess)
+TEST(InitNonBoolNonStrTest, UnsignedInt)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -158,7 +158,7 @@ TEST(InitNonBoolNonStrTest, UnsignedIntSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, LongSuccess)
+TEST(InitNonBoolNonStrTest, Long)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -173,7 +173,7 @@ TEST(InitNonBoolNonStrTest, LongSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, UnsignedLongSuccess)
+TEST(InitNonBoolNonStrTest, UnsignedLong)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -188,7 +188,7 @@ TEST(InitNonBoolNonStrTest, UnsignedLongSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, FloatSuccess)
+TEST(InitNonBoolNonStrTest, Float)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -203,7 +203,7 @@ TEST(InitNonBoolNonStrTest, FloatSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, DoubleSuccess)
+TEST(InitNonBoolNonStrTest, Double)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
@@ -218,7 +218,7 @@ TEST(InitNonBoolNonStrTest, DoubleSuccess)
     fclose(pFile);
 }
 
-TEST(InitNonBoolNonStrTest, LongDoubleSuccess)
+TEST(InitNonBoolNonStrTest, LongDouble)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
