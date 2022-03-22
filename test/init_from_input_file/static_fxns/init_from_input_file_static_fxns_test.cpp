@@ -6,6 +6,23 @@ extern "C" {
 #include <gtest/gtest.h>
 
 // TODO: Add tests
+TEST(InitNonBoolNonStrTest, MatchingFailure)
+{
+    const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    signed char sc;
+
+    // Attempt to populate a signed char (i.e., sc) with a non-numeric
+    // character constant (i.e., the value corresponding to the key named
+    // "charSuccess") -> cause a matching failure
+    EXPECT_FALSE(initNonBoolNonStr(pFile, "charSuccess", "%d", &sc));
+
+    fclose(pFile);
+}
+
 TEST(InitNonBoolNonStrTest, CharSuccess)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
