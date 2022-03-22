@@ -45,10 +45,10 @@ TEST(InitNonBoolNonStrTest, MatchingFailure)
 
     signed char sc;
 
-    // Attempt to populate a signed char (i.e., sc) with a non-numeric
-    // character constant (i.e., the value corresponding to the key named
-    // "charSuccess") -> cause a matching failure
-    EXPECT_FALSE(initNonBoolNonStr(pFile, "charSuccess", "%d", &sc));
+    // Attempting to populate a signed char (i.e., sc) with a non-numeric
+    // character constant (i.e., the value corresponding to keyChar) causes a
+    // matching failure
+    EXPECT_FALSE(initNonBoolNonStr(pFile, "keyChar", "%d", &sc));
 
     fclose(pFile);
 }
@@ -62,7 +62,7 @@ TEST(InitNonBoolNonStrTest, CharSuccess)
 
     char c;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "charSuccess", "%c", &c));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyChar", "%c", &c));
     EXPECT_EQ(c, 'A');
 
     fclose(pFile);
@@ -77,7 +77,7 @@ TEST(InitNonBoolNonStrTest, SignedCharSuccess)
 
     signed char sc;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "scharSuccess", "%d", &sc));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keySchar", "%d", &sc));
     EXPECT_EQ(sc, -1);
 
     fclose(pFile);
@@ -92,7 +92,7 @@ TEST(InitNonBoolNonStrTest, UnsignedCharSuccess)
 
     unsigned char uc;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "ucharSuccess", "%u", &uc));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyUchar", "%u", &uc));
     EXPECT_EQ(uc, 1U);
 
     fclose(pFile);
@@ -107,7 +107,7 @@ TEST(InitNonBoolNonStrTest, ShortSuccess)
 
     short s;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "shortSuccess", "%hd", &s));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyShort", "%hd", &s));
     EXPECT_EQ(s, -2);
 
     fclose(pFile);
@@ -122,7 +122,7 @@ TEST(InitNonBoolNonStrTest, UnsignedShortSuccess)
 
     unsigned short us;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "ushortSuccess", "%hu", &us));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyUshort", "%hu", &us));
     EXPECT_EQ(us, 2U);
 
     fclose(pFile);
@@ -137,7 +137,7 @@ TEST(InitNonBoolNonStrTest, IntSuccess)
 
     int i;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "intSuccess", "%d", &i));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyInt", "%d", &i));
     EXPECT_EQ(i, -3);
 
     fclose(pFile);
@@ -152,7 +152,7 @@ TEST(InitNonBoolNonStrTest, UnsignedIntSuccess)
 
     unsigned int ui;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "uintSuccess", "%u", &ui));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyUint", "%u", &ui));
     EXPECT_EQ(ui, 3U);
 
     fclose(pFile);
@@ -167,7 +167,7 @@ TEST(InitNonBoolNonStrTest, LongSuccess)
 
     long l;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "longSuccess", "%ld", &l));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyLong", "%ld", &l));
     EXPECT_EQ(l, -4L);
 
     fclose(pFile);
@@ -182,7 +182,7 @@ TEST(InitNonBoolNonStrTest, UnsignedLongSuccess)
 
     unsigned long ul;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "ulongSuccess", "%lu", &ul));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyUlong", "%lu", &ul));
     EXPECT_EQ(ul, 4UL);
 
     fclose(pFile);
@@ -197,7 +197,7 @@ TEST(InitNonBoolNonStrTest, FloatSuccess)
 
     float f;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "floatSuccess", "%f", &f));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyFloat", "%f", &f));
     EXPECT_EQ(f, 0.12345F);
 
     fclose(pFile);
@@ -212,7 +212,7 @@ TEST(InitNonBoolNonStrTest, DoubleSuccess)
 
     double d;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "doubleSuccess", "%lf", &d));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyDouble", "%lf", &d));
     EXPECT_EQ(d, 0.123456789);
 
     fclose(pFile);
@@ -227,7 +227,7 @@ TEST(InitNonBoolNonStrTest, LongDoubleSuccess)
 
     long double ld;
 
-    EXPECT_TRUE(initNonBoolNonStr(pFile, "ldoubleSuccess", "%Lf", &ld));
+    EXPECT_TRUE(initNonBoolNonStr(pFile, "keyLdouble", "%Lf", &ld));
     EXPECT_EQ(ld, 0.12345678987654321L);
 
     fclose(pFile);
