@@ -1,10 +1,7 @@
 # !/usr/bin/bash
 
 # Names of relevant subdirectories in test (level-0) directory
-# TODO: Regarding two lines below, uncomment first and delete second after
-#       init_from_input_file tests are written
-# src_files=('init_from_input_file' 'init_tools')  # Level 1
-src_files='init_tools'  # Level 1
+src_files=('init_from_input_file' 'init_tools')  # Level 1
 fxn_types=('non_static_fxns' 'static_fxns')  # Level 2
 fxn_names=('other' 'printError')  # Level 3 for init_tools/non_static_fxns only
 
