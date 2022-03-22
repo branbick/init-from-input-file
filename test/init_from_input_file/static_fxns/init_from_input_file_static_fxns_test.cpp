@@ -6,6 +6,36 @@ extern "C" {
 #include <gtest/gtest.h>
 
 // TODO: Add tests
+TEST(InitNonBoolNonStrTest, FindKeyFailure)
+{
+    const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initNonBoolNonStr(pFile,
+                                   "keyDoesNotExist",
+                                   "dummyFormatSpec",
+                                   NULL));
+
+    fclose(pFile);
+}
+
+TEST(InitNonBoolNonStrTest, FindValueFailure)
+{
+    const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initNonBoolNonStr(pFile,
+                                   "keyExistsButValueDoesNot",
+                                   "dummyFormatSpec",
+                                   NULL));
+
+    fclose(pFile);
+}
+
 TEST(InitNonBoolNonStrTest, MatchingFailure)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
