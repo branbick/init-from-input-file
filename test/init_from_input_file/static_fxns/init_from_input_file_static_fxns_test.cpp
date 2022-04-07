@@ -285,26 +285,56 @@ TEST(InitBoolTest, NumberZeroInsteadOfFalse)
     fclose(pFile);
 }
 
-TEST(InitBoolTest, WordStartsWithTrue)
+TEST(InitBoolTest, WordThatStartsWithTrue)
 {
     const char* const kFileName {"../input/InitBoolTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_FALSE(initBool(pFile, "wordStartsWithTrue", NULL));
+    EXPECT_FALSE(initBool(pFile, "wordThatStartsWithTrue", NULL));
 
     fclose(pFile);
 }
 
-TEST(InitBoolTest, WordStartsWithFalse)
+TEST(InitBoolTest, WordThatStartsWithFalse)
 {
     const char* const kFileName {"../input/InitBoolTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
-    EXPECT_FALSE(initBool(pFile, "wordStartsWithFalse", NULL));
+    EXPECT_FALSE(initBool(pFile, "wordThatStartsWithFalse", NULL));
+
+    fclose(pFile);
+}
+
+TEST(InitBoolTest, ExactlyTrue)
+{
+    const char* const kFileName {"../input/InitBoolTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    bool b;
+
+    EXPECT_TRUE(initBool(pFile, "exactlyTrue", &b));
+    EXPECT_EQ(b, true);
+
+    fclose(pFile);
+}
+
+TEST(InitBoolTest, ExactlyFalse)
+{
+    const char* const kFileName {"../input/InitBoolTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    bool b;
+
+    EXPECT_TRUE(initBool(pFile, "exactlyFalse", &b));
+    EXPECT_EQ(b, false);
 
     fclose(pFile);
 }

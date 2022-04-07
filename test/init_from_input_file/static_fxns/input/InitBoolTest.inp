@@ -2,5 +2,7 @@ keyExistsButValueDoesNot
 
 numberOneInsteadOfTrue   1
 numberZeroInsteadOfFalse 0
-wordStartsWithTrue       truest
-wordStartsWithFalse      falsely
+wordThatStartsWithTrue   truest
+wordThatStartsWithFalse  falsely
+exactlyTrue              true
+exactlyFalse             false
