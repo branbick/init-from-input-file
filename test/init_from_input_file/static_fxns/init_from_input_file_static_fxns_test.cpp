@@ -256,3 +256,7 @@ TEST(InitBool, FindValueFailure)
 
     fclose(pFile);
 }
+
+// Regarding initBool, it's impossible to cause a matching failure--like what's
+// done in the case of initNonBoolNonStr (refer to the "MatchingFailure" test
+// above)--because temp is a char (array), which can hold any type of constant.
