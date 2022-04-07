@@ -232,3 +232,27 @@ TEST(InitNonBoolNonStrTest, LongDouble)
 
     fclose(pFile);
 }
+
+TEST(InitBool, FindKeyFailure)
+{
+    const char* const kFileName {"../input/InitBool.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initBool(pFile, "keyDoesNotExist", NULL));
+
+    fclose(pFile);
+}
+
+TEST(InitBool, FindValueFailure)
+{
+    const char* const kFileName {"../input/InitBool.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initBool(pFile, "keyExistsButValueDoesNot", NULL));
+
+    fclose(pFile);
+}
