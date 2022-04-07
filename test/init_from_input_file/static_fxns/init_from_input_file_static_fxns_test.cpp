@@ -5,7 +5,6 @@ extern "C" {
 
 #include <gtest/gtest.h>
 
-// TODO: Add tests
 TEST(InitNonBoolNonStrTest, FindKeyFailure)
 {
     const char* const kFileName {"../input/InitNonBoolNonStrTest.inp"};
@@ -338,3 +337,5 @@ TEST(InitBoolTest, ExactlyFalse)
 
     fclose(pFile);
 }
+
+// TODO: Add tests for initString
