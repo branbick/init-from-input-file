@@ -233,9 +233,9 @@ TEST(InitNonBoolNonStrTest, LongDouble)
     fclose(pFile);
 }
 
-TEST(InitBool, FindKeyFailure)
+TEST(InitBoolTest, FindKeyFailure)
 {
-    const char* const kFileName {"../input/InitBool.inp"};
+    const char* const kFileName {"../input/InitBoolTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
@@ -245,9 +245,9 @@ TEST(InitBool, FindKeyFailure)
     fclose(pFile);
 }
 
-TEST(InitBool, FindValueFailure)
+TEST(InitBoolTest, FindValueFailure)
 {
-    const char* const kFileName {"../input/InitBool.inp"};
+    const char* const kFileName {"../input/InitBoolTest.inp"};
     FILE* const pFile {fopen(kFileName, "r")};
     if (pFile == NULL)
         FAIL() << "Unable to open " << kFileName << std::endl;
@@ -260,3 +260,51 @@ TEST(InitBool, FindValueFailure)
 // Regarding initBool, it's impossible to cause a matching failure--like what's
 // done in the case of initNonBoolNonStr (refer to the "MatchingFailure" test
 // above)--because temp is a char (array), which can hold any type of constant.
+
+TEST(InitBoolTest, NumberOneInsteadOfTrue)
+{
+    const char* const kFileName {"../input/InitBoolTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initBool(pFile, "numberOneInsteadOfTrue", NULL));
+
+    fclose(pFile);
+}
+
+TEST(InitBoolTest, NumberZeroInsteadOfFalse)
+{
+    const char* const kFileName {"../input/InitBoolTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initBool(pFile, "numberZeroInsteadOfFalse", NULL));
+
+    fclose(pFile);
+}
+
+TEST(InitBoolTest, WordStartsWithTrue)
+{
+    const char* const kFileName {"../input/InitBoolTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initBool(pFile, "wordStartsWithTrue", NULL));
+
+    fclose(pFile);
+}
+
+TEST(InitBoolTest, WordStartsWithFalse)
+{
+    const char* const kFileName {"../input/InitBoolTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initBool(pFile, "wordStartsWithFalse", NULL));
+
+    fclose(pFile);
+}
