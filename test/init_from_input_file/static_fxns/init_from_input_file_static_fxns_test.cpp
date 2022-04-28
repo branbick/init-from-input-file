@@ -338,7 +338,9 @@ TEST(InitBoolTest, ExactlyFalse)
     fclose(pFile);
 }
 
-// TODO: Add tests for initString
+// TODO: Add tests for initString. Add tests for successes that have different
+// values--letters, numbers, symbols, and combinations. (Note that the key
+// "prematureEof" must be listed last in the input file.)
 TEST(InitStringTest, FindKeyFailure)
 {
     const char* const kFileName {"../input/InitStringTest.inp"};
