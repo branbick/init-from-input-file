@@ -339,3 +339,26 @@ TEST(InitBoolTest, ExactlyFalse)
 }
 
 // TODO: Add tests for initString
+TEST(InitStringTest, FindKeyFailure)
+{
+    const char* const kFileName {"../input/InitStringTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initString(pFile, "keyDoesNotExist", NULL));
+
+    fclose(pFile);
+}
+
+TEST(InitStringTest, FindValueFailure)
+{
+    const char* const kFileName {"../input/InitStringTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    EXPECT_FALSE(initString(pFile, "keyExistsButValueDoesNot", NULL));
+
+    fclose(pFile);
+}
