@@ -362,3 +362,32 @@ TEST(InitStringTest, FindValueFailure)
 
     fclose(pFile);
 }
+
+TEST(InitStringTest, FirstCharSkipped)
+{
+    const char* const kFileName {"../input/InitStringTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    char str[65];
+
+    EXPECT_TRUE(initString(pFile, "firstCharSkipped", str));
+    EXPECT_STREQ(str, "ecause the opening double quotation mark is missing");
+
+    fclose(pFile);
+}
+
+TEST(InitStringTest, PrematureEof)
+{
+    const char* const kFileName {"../input/InitStringTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    char str[65];
+
+    EXPECT_FALSE(initString(pFile, "prematureEof", str));
+
+    fclose(pFile);
+}
