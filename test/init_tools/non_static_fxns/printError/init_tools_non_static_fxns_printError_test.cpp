@@ -16,7 +16,7 @@ TEST(PrintErrorTest, StderrBuffer)
     const char* const kFileName {"dummy_file_name.inp"};
     const char* const kKeyName {"dummyKeyName"};
 
-    char buf[BUFSIZ];
+    char buf[BUFSIZ] {'\0'};  // Best practice: initialize all the elements
     setbuf(stderr, buf);
     printError(kMsg, kFileMacro, kLineMacro, kFileName, kKeyName);
 
