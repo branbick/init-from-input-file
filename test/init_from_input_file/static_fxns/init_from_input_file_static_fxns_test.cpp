@@ -338,9 +338,6 @@ TEST(InitBoolTest, ExactlyFalse)
     fclose(pFile);
 }
 
-// TODO: Add tests for initString. Add tests for successes that have different
-// values--letters, numbers, symbols, and combinations. (Note that the key
-// "prematureEof" must be listed last in the input file.)
 TEST(InitStringTest, FindKeyFailure)
 {
     const char* const kFileName {"../input/InitStringTest.inp"};
@@ -361,6 +358,21 @@ TEST(InitStringTest, FindValueFailure)
         FAIL() << "Unable to open " << kFileName << std::endl;
 
     EXPECT_FALSE(initString(pFile, "keyExistsButValueDoesNot", NULL));
+
+    fclose(pFile);
+}
+
+TEST(InitStringTest, MixedBagOfChars)
+{
+    const char* const kFileName {"../input/InitStringTest.inp"};
+    FILE* const pFile {fopen(kFileName, "r")};
+    if (pFile == NULL)
+        FAIL() << "Unable to open " << kFileName << std::endl;
+
+    char str[65];
+
+    EXPECT_TRUE(initString(pFile, "mixedBagOfChars", str));
+    EXPECT_STREQ(str, "1 Letters, 2 NUMBERS & 3 symbols (+ 'single quotes'!)");
 
     fclose(pFile);
 }

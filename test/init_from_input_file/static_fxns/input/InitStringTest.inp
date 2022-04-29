@@ -1,4 +1,9 @@
 keyExistsButValueDoesNot   
 
-firstCharSkipped because the opening double quotation mark is missing"
+mixedBagOfChars  "1 Letters, 2 NUMBERS & 3 symbols (+ 'single quotes'!)"
+firstCharSkipped  because the opening double quotation mark is missing"
+
+# "prematureEof" must be the last key listed in this input file, and its
+# corresponding (improperly terminated) value should be immediately followed by
+# a newline, after which is the end of the file
 prematureEof "because the closing double quotation mark is missing
