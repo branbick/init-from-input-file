@@ -8,6 +8,8 @@ extern "C" {
 #include <cstring>
 #include <cmath>
 
+// TODO: Fix Valgrind "Syscall param write(buf) points to unaddressable
+// byte(s)" error associated with buf (variable)
 TEST(PrintErrorTest, StderrBuffer)
 {
     const char* const kMsg {"Dummy message (ignore me)"};
