@@ -8,8 +8,6 @@ extern "C" {
 #include <cstring>
 #include <cmath>
 
-// TODO: Fix Valgrind "Syscall param write(buf) points to unaddressable
-// byte(s)" error associated with buf (variable)
 TEST(PrintErrorTest, StderrBuffer)
 {
     const char* const kMsg {"Dummy message (ignore me)"};
@@ -18,9 +16,13 @@ TEST(PrintErrorTest, StderrBuffer)
     const char* const kFileName {"dummy_file_name.inp"};
     const char* const kKeyName {"dummyKeyName"};
 
+    // Specify a buffer, buf, for stderr such that the error message written to
+    // stderr via printError gets added to buf. Then, before 1) buf's lifetime
+    // ends and 2) stderr is written to again, close stderr.
     char buf[BUFSIZ] {'\0'};  // Best practice: initialize all the elements
     setbuf(stderr, buf);
     printError(kMsg, kFileMacro, kLineMacro, kFileName, kKeyName);
+    fclose(stderr);
 
     const char* const kFormatErrMsg {
         "ERROR: %s\n       Source: %s | Line: %d | Input: %s | Key: %s\n"};
