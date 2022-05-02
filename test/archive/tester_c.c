@@ -123,8 +123,9 @@ int main(void)
 
     /*
     long double
-    NOTE: If using MinGW, have to prefix scanf (init_fxns ->
-    init_from_input_file) and printf (below) with __mingw_.
+    NOTE: If using MinGW, have to prefix printf (IF statement below) and fscanf
+    (init_from_input_file.c > initNonBoolNonStr) with "__mingw_"--without
+    quotation marks.
     Refer to https://stackoverflow.com/a/14988103.
     */
     varLdouble = 0.0L;
