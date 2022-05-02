@@ -64,6 +64,7 @@ The following  table lists the supported `kVarType` arguments that can be passed
    2. `const char* kVarType`: The type of the to-be-initialized variable (discussed in the previous section)
    3. `const char* kKeyName`: The name of the key to search the input text file for, corresponding to the value to initialize the to-be-initialized variable with
    4. `void* pVar`: The address of the to-be-initialized variable
+4. Incorporate the source files `src/init_from_input_file.c` and `src/init_tools.c` into the build. (The former `#include`s `src/init_tools.h`.)
 
 ## Additional notes
 ### Compatibility
@@ -85,8 +86,11 @@ If the macro `PRINT_ERRORS` is `#define`d, then a message containing the followi
 
 Detailed error messages greatly help with debugging. If you decide to not always `#define PRINT_ERRORS`, you should *absolutely* do so if `initFromInputFile` has returned `false`.
 
-### Future improvements (`TODO`: Finalize and clean up this section before creating pull request)
-- Develop unit tests that run with `PRINT_ERRORS` `#define`d
-- Regarding the [README](https://github.com/branbick/init-from-input-file/blob/main/README.md#how-to-use-this-tool), add that the two source (i.e., `src/*.c`) files need to be incorporated into the build
-- Regarding the `run_test` scripts, figure out how to get the name of the `.cpp` file so it's not just hard-coded
-- Regarding the unit tests, maybe use [test fixtures](https://google.github.io/googletest/primer.html#same-data-multiple-tests) to avoid code duplication?
+### Future improvements (to the unit tests)
+- Add preprocessor directives that allow the tests to run with or without `PRINT_ERRORS` `#define`d
+   - Currently, all but one of the unit tests only work if `PRINT_ERRORS` is *not* `#define`d
+   - `init_tools_non_static_fxns_printError_test` inherently requires `PRINT_ERRORS` to be `#define`d
+- Try to use [test fixtures](https://google.github.io/googletest/primer.html#same-data-multiple-tests) to avoid code duplication
+- Regarding the `run_test.sh` scripts, figure out how to get (or construct) the names of the `.cpp` files so they don't have to be hard-coded
+
+`TODO`: Add section on unit testing
