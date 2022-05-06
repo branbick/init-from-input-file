@@ -1,0 +1,5 @@
+C:
+gcc tester_c.c ../../src/init_from_input_file.c ../../src/init_tools.c -D PRINT_ERRORS -Wall -Wextra -Wpedantic -std=c90 -o tester_c_print_errors.out
+
+C++:
+g++ tester_cpp.cpp ../../src/init_from_input_file.c ../../src/init_tools.c -D PRINT_ERRORS -Wall -Wextra -Wpedantic -std=c++17 -o tester_cpp_print_errors.out

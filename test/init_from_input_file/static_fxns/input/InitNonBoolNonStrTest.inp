@@ -1,0 +1,14 @@
+keyExistsButValueDoesNot   
+
+keyChar     A
+keySchar   -1
+keyUchar    1
+keyShort   -2
+keyUshort   2
+keyInt     -3
+keyUint     3
+keyLong    -4
+keyUlong    4
+keyFloat    0.12345
+keyDouble   0.123456789
+keyLdouble  0.12345678987654321

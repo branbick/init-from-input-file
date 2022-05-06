@@ -9,12 +9,12 @@
 				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"../init_from_input_file.c",  // Project-unique
-				"../init_tools.c",  // Project-unique
+				"${workspaceFolder}/src/init_from_input_file.c",
+				"${workspaceFolder}/src/init_tools.c",
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
-				"-std=c90",  // Project-unique
+				"-std=c90",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}.out"
 			],
@@ -38,12 +38,12 @@
 				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"../init_from_input_file.c",  // Project-unique
-				"../init_tools.c",  // Project-unique
+				"${workspaceFolder}/src/init_from_input_file.c",
+				"${workspaceFolder}/src/init_tools.c",
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
-				"-std=c++17",  // Project-unique
+				"-std=c++17",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}.out"
 			],
@@ -64,12 +64,12 @@
 				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"..\\init_from_input_file.c",  // Project-unique
-				"..\\init_tools.c",  // Project-unique
+				"${workspaceFolder}\\src\\init_from_input_file.c",
+				"${workspaceFolder}\\src\\init_tools.c",
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
-				"-std=c90",  // Project-unique
+				"-std=c90",
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe"
 			],
@@ -90,12 +90,12 @@
 				"-fdiagnostics-color=always",
 				"-g",
 				"${file}",
-				"..\\init_from_input_file.c",  // Project-unique
-				"..\\init_tools.c",  // Project-unique
+				"${workspaceFolder}\\src\\init_from_input_file.c",
+				"${workspaceFolder}\\src\\init_tools.c",
 				"-Wall",
 				"-Wextra",
 				"-Wpedantic",
-				"-std=c++17",  // Project-unique
+				"-std=c++17",
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe"
 			],

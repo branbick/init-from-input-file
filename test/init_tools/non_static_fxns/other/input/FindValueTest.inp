@@ -1,0 +1,5 @@
+# Dummy comment
+dummyKey "dummy value"
+
+keyAndValueExist "Hooray!"  # Success
+keyExistsButValueDoesNot   

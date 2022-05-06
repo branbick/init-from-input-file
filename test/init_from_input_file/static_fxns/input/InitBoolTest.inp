@@ -1,0 +1,8 @@
+keyExistsButValueDoesNot   
+
+numberOneInsteadOfTrue   1
+numberZeroInsteadOfFalse 0
+wordThatStartsWithTrue   truest
+wordThatStartsWithFalse  falsely
+exactlyTrue              true
+exactlyFalse             false

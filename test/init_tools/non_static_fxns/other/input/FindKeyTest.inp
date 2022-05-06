@@ -1,0 +1,13 @@
+# Dummy comment
+dummyKey "dummy value"
+
+keyAndValueExist "Hooray!"  # Success
+  keyNotLeftAligned "so it won't be found"
+
+# A search for the below key (keyAndValueNotSeparated) will fail because the
+# key isn't separated from its corresponding value (123) by a space or tab
+keyAndValueNotSeparated123
+
+# A search for the below key will fail because the key is immediately
+# followed by a newline (instead of a space or tab)
+keyFollowedByNewline
