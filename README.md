@@ -66,13 +66,13 @@ The following  table lists the supported `kVarType` arguments that can be passed
    4. `void* pVar`: The address of the to-be-initialized variable
 4. Incorporate the source files `src/init_from_input_file.c` and `src/init_tools.c` into the build. (The former `#include`s `src/init_tools.h`.)
 
-## Additional notes
+## Miscellaneous notes
 ### Compatibility
 One of the primary objectives of this project was ensuring 1) compatibility with C *and* C++ and 2) backward compatibility. Hence, this tool is written in [ANSI C](https://en.wikipedia.org/wiki/ANSI_C) and compatible with [C++17](https://en.wikipedia.org/wiki/C%2B%2B17).
 
 ### User responsibilities
 Due to the nature of C, as well as various deliberate design decisions made for the sakes of both efficiency and simplicity, this tool grants the user power, which must be accompanied by responsibility. That being said, some noteworthy user responsibilities are as follows:
-- Ensure the type of the to-be-initialized variable is capable of accurately storing the corresponding value listed in the input text file. For example, the value corresponding to an `int` must be between `INT_MIN` and `INT_MAX`, which are machine-dependent and `#define`d in `limits.h`. (Otherwise, integer overflow--which may lead to undefined behavior--or loss of precision will occur.)
+- Ensure the type of the to-be-initialized variable is capable of accurately storing the corresponding value listed in the input text file. For example, concerning C code, the value corresponding to an `int` must be inclusively between `INT_MIN` and `INT_MAX`, which are machine-dependent and `#define`d in `limits.h`. (Otherwise, integer overflow--which may lead to undefined behavior--or loss of precision will occur.)
 - Regarding strings, ensure sufficient memory is allocated for the to-be-initialized variable based on the length of the corresponding value listed in the input text file. For example, the variable corresponding to the value `Hey, Bob!` must be able to hold (at least) ten `char`s--including the null terminator--and, therefore, be defined (in C code specifically) as either `char str[10]` or `char* str = malloc(10 * sizeof(char))`. [Otherwise, you'll end up "touching" memory you shouldn't and (hopefully!) be presented with an error.]
 - As previously mentioned, ensure string values listed in the input text file both start and end with a double quotation mark. [If the opening one isn't included, the first `char` of the value will be skipped; and, if the closing one isn't included, you'll likely end up "touching" memory you shouldn't and definitely encounter an `initFromInputFile` failure.]
 - Check `initFromInputFile`'s return value; don't just assume it worked. There are many things--both machine and user faults (e.g., a memory shortage and an inconspicuous typo, respectively)--that can cause it to fail.
@@ -86,11 +86,22 @@ If the macro `PRINT_ERRORS` is `#define`d, then a message containing the followi
 
 Detailed error messages greatly help with debugging. If you decide to not always `#define PRINT_ERRORS`, you should *absolutely* do so if `initFromInputFile` has returned `false`.
 
-### Future improvements (to the unit tests)
+## Unit testing
+Every function that's unique to this tool--i.e., not part of the [standard library](https://en.wikipedia.org/wiki/C_standard_library)--has been thoroughly unit tested using [GoogleTest](https://github.com/google/googletest) (framework) paired with [CMake](https://cmake.org/) (build system).
+
+### How to run the unit tests*
+Execute `test/run_tests.sh`, which then executes all the `run_test.sh` scripts located in the following `test` directories:
+1. `init_from_input_file/non_static_fxns`
+2. `init_from_input_file/static_fxns`
+3. `init_tools/non_static_fxns/other`
+4. `init_tools/non_static_fxns/printError`
+5. `init_tools/static_fxns`
+
+\* Only works on Linux
+
+### Future improvements
 - Add preprocessor directives that allow the tests to run with or without `PRINT_ERRORS` `#define`d
    - Currently, all but one of the unit tests only work if `PRINT_ERRORS` is *not* `#define`d
    - `init_tools_non_static_fxns_printError_test` inherently requires `PRINT_ERRORS` to be `#define`d
 - Try to use [test fixtures](https://google.github.io/googletest/primer.html#same-data-multiple-tests) to avoid code duplication
 - Regarding the `run_test.sh` scripts, figure out how to get (or construct) the names of the `.cpp` files so they don't have to be hard-coded
-
-`TODO`: Add section on unit testing
