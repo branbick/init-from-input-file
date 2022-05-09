@@ -90,7 +90,7 @@ Detailed error messages greatly help with debugging. If you decide to not always
 Every function that's unique to this tool--i.e., not part of the [standard library](https://en.wikipedia.org/wiki/C_standard_library)--has been thoroughly unit tested using [GoogleTest](https://github.com/google/googletest) (framework) paired with [CMake](https://cmake.org/) (build system).
 
 ### How to run the unit tests*
-`cd` into the `test` directory and execute `./run_tests.sh`, which then triggers all the `run_test.sh` scripts located in the following subdirectories:
+`cd` into the `test` directory and execute `./run_tests.sh`, which triggers all the `run_test.sh` scripts located in the following subdirectories:
 1. `init_from_input_file/non_static_fxns`
 2. `init_from_input_file/static_fxns`
 3. `init_tools/non_static_fxns/other`
